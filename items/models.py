@@ -32,7 +32,7 @@ class Items(models.Model):
 
 
     def save(self, *args, **kwargs):
-        '''Handle datetime field before save'''
+        '''Handle datetime fields before save'''
 
         current_time = timezone.now()
 
