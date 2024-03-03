@@ -12,4 +12,6 @@ class CustomUserAdmin( UserAdmin ):
     model = CustomUser
 
 
+# Register models for admin site
 admin.site.register(CustomUser, CustomUserAdmin)
+

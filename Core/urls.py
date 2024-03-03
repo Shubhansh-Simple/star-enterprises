@@ -20,3 +20,8 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+admin.site.site_header = 'ADMINISTRATION'
+admin.site.index_title = 'Star Enterprises Databases'
+
+
