@@ -15,10 +15,12 @@ class Items(models.Model):
     price          = models.PositiveSmallIntegerField('Item Price')
     total_quantity = models.SmallIntegerField('Total quantity of Item', default=0) # it cannot be negative
     is_active      = models.BooleanField('Status of Item', default=True)
-    created_at     = models.DateTimeField(editable=False) 
+    created_at     = models.DateTimeField(editable=False)
     updated_at     = models.DateTimeField(editable=False)                          # update only on changed in total quantity
 
     class Meta:
+        '''Adding sorting and user friendly model name for admin site'''
+
         ordering = ['name','is_active']
         verbose_name        = 'Item'
         verbose_name_plural = 'Items'
@@ -36,10 +38,12 @@ class Items(models.Model):
 
         current_time = timezone.now()
 
+        # CREATE
         if self.id:
             # Update updated_at only change in total quantity
             if self.cached_total_quantity != self.total_quantity: self.updated_at = current_time
 
+        # UPDATE
         else:
             # Setting created_at and updated_at
             self.created_at, self.updated_at = current_time, current_time
@@ -50,4 +54,3 @@ class Items(models.Model):
 
     def __str__(self):
         return str(self.name)
-
