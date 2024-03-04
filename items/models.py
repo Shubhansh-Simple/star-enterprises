@@ -36,12 +36,10 @@ class Items(models.Model):
 
         current_time = timezone.now()
 
-        # Updating existing object
         if self.id:
             # Update updated_at only change in total quantity
             if self.cached_total_quantity != self.total_quantity: self.updated_at = current_time
 
-        # Creating new object
         else:
             # Setting created_at and updated_at
             self.created_at, self.updated_at = current_time, current_time
