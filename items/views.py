@@ -15,7 +15,9 @@ class CurrentStockListView(ListView):
     context_object_name = 'current_stock_list'
 
     def get_queryset(self):
-        return super().get_queryset()
+        queryset = super().get_queryset()
+        return queryset.filter(is_active=True)
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         '''Add total quantity in current stock'''
