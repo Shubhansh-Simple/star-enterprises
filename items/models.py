@@ -10,8 +10,8 @@ class Items(models.Model):
     '''Canteen Item Model'''
 
     name           = models.CharField('Item Name',max_length=70)
-    price          = models.PositiveSmallIntegerField('Item Price',     validators=[MinValueValidator(10)])
-    total_quantity = models.SmallIntegerField('Total quantity of Item', validators=[MinValueValidator(0)], default=0)
+    price          = models.PositiveSmallIntegerField('Item Price', validators=[MinValueValidator(10)])
+    total_quantity = models.PositiveSmallIntegerField('Total quantity of Item', default=0)
     is_active      = models.BooleanField('Status of Item', default=True)
     created_at     = models.DateTimeField(editable=False)
     updated_at     = models.DateTimeField(editable=False)     # update only on changed in total quantity
