@@ -11,7 +11,7 @@ from .models import Items
 class ItemsAdmin(ModelAdmin):
     '''Modify item representation in admin site'''
 
-    list_display = ('name','total_quantity','is_active',)
+    list_display = ('name','total_quantity','is_active','updated_at')
 
 
 # Register models for admin site
