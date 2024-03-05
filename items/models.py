@@ -1,22 +1,20 @@
 # items/models.py
 
 # django
-from django.db    import models
-from django.utils import timezone
-
-# local
-#from django.conf import settings
+from django.db              import models
+from django.utils           import timezone
+from django.core.validators import MinValueValidator
 
 
 class Items(models.Model):
     '''Canteen Item Model'''
 
     name           = models.CharField('Item Name',max_length=70)
-    price          = models.PositiveSmallIntegerField('Item Price')
-    total_quantity = models.SmallIntegerField('Total quantity of Item', default=0) # it cannot be negative
+    price          = models.PositiveSmallIntegerField('Item Price',     validators=[MinValueValidator(10)])
+    total_quantity = models.SmallIntegerField('Total quantity of Item', validators=[MinValueValidator(0)], default=0)
     is_active      = models.BooleanField('Status of Item', default=True)
     created_at     = models.DateTimeField(editable=False)
-    updated_at     = models.DateTimeField(editable=False)                          # update only on changed in total quantity
+    updated_at     = models.DateTimeField(editable=False)     # update only on changed in total quantity
 
     class Meta:
         '''Adding sorting and user friendly model name for admin site'''
