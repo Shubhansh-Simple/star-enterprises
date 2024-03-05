@@ -11,7 +11,8 @@ from .models import Imports
 class ImportsAdmin(ModelAdmin):
     '''Modify imports representation in admin site'''
 
-    list_display = ('items','import_by','import_quantity','import_date')
+    readonly_fields = ['id','import_date']
+    list_display    = ('items','id','import_by','import_quantity','import_date')
 
 
 # Register models for admin site

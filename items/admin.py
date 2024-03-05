@@ -11,7 +11,8 @@ from .models import Items
 class ItemsAdmin(ModelAdmin):
     '''Modify item representation in admin site'''
 
-    list_display = ('name','total_quantity','is_active','updated_at')
+    readonly_fields = ['id','created_at','updated_at']
+    list_display    = ('name','id','total_quantity','is_active','updated_at')
 
 
 # Register models for admin site

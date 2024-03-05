@@ -9,7 +9,9 @@ from .models import CustomUser
 
 
 class CustomUserAdmin( UserAdmin ):
-    model = CustomUser
+    model           = CustomUser
+    readonly_fields = ['id']
+    list_display    = ('username','id','is_staff')
 
 
 # Register models for admin site
