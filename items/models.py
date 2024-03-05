@@ -19,7 +19,7 @@ class Items(models.Model):
     class Meta:
         '''Adding sorting and user friendly model name for admin site'''
 
-        ordering = ['name','is_active']
+        ordering = ['name']
         verbose_name        = 'Item'
         verbose_name_plural = 'Items'
 
