@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # local apps
     'users',
     'items',
+    'import_app',
 ]
 
 MIDDLEWARE = [

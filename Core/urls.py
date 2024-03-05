@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('',        include('items.urls') ),
+    path('import/', include('import_app.urls') ),
 ]
 
 
