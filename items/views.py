@@ -11,10 +11,12 @@ class CurrentStockListView(ListView):
     '''Return the current stock of the canteen'''
 
     model               = Items
-    template_name       = 'current-stock-list.html' 
+    template_name       = 'current-stock-list.html'
     context_object_name = 'current_stock_list'
 
     def get_queryset(self):
+        '''Will only shows active items in current stock'''
+
         queryset = super().get_queryset()
         return queryset.filter(is_active=True)
 
