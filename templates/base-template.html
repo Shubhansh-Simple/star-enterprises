@@ -26,6 +26,22 @@
     <style>
       .footer{ margin-top :auto; }
 
+      .import_stock_btn {
+        position: fixed;
+        left : 0;
+        z-index: 999;
+        bottom: 50px;
+        border-radius: 50%;
+      }
+
+      .export_stock_btn {
+        position: fixed;
+        right: 0;
+        z-index: 999;
+        bottom: 50px;
+        border-radius: 50%;
+      }
+
       {% block style_block %}
       {% endblock %}
     </style>
@@ -36,6 +52,7 @@
   </head>
 
   <body>
+
     <!-- HEADER - NAVBAR SECTION-->
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -106,10 +123,15 @@
         <br>
         <br>
 
+        <!--------IMPORT/EXPORT BUTTONS----------->
+        <a class="btn btn-success import_stock_btn">Add</a>
+        <a class="btn btn-danger export_stock_btn">Supply</a>
+
         <!-----------APPLICATION'S BODY------------>
         {% block body_lower %}
         {% endblock %}
       </div>
+
     </main>
 
     <!--FOOTER - SITE DEVELOPER SECTION-->
