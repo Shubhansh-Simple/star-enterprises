@@ -30,8 +30,10 @@ class Imports(models.Model):
         self.items.total_quantity += self.import_quantity
         self.items.save()
 
+        self.import_date = timezone.now().date() + timezone.timedelta(1)
+
         super().save(*args, **kwargs)
 
 
     def __str__(self):
-        return f'{self.items.name} - {self.import_by.username} - {self.import_date}'
+        return f'{self.import_date} - {self.items.name}'

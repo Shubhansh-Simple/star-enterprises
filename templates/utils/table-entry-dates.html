@@ -20,7 +20,7 @@
     {% for entry_date in entry_dates %}
       <tr>
         <th class="text-center py-3">
-          <a href="{% url 'current_stock_list' %}" class="link-{{link_color}} link-underline-opacity-0 link-underline-opacity-100-hover">
+          <a href="{% url 'import_detail' entry_date %}" class="link-{{link_color}} link-underline-opacity-0 link-underline-opacity-100-hover">
             {{entry_date}}
           </a>
         </th>

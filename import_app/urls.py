@@ -8,10 +8,10 @@ from .views import ImportStockListView, ImportStockCreateView, ImportStockDetail
 
 
 urlpatterns = [
-    path('',                 ImportStockListView.as_view(),   name='import_list'),
-    path('create/',          ImportStockCreateView.as_view(), name='import_create'),
-    path('<int:pk>/',        ImportStockDetailView.as_view(), name='import_detail'),
-    path('<int:pk>/update/', ImportStockUpdateView.as_view(), name='import_update'),
-    path('<int:pk>/delete/', ImportStockDeleteView.as_view(), name='import_delete'),
+    path('',                  ImportStockListView.as_view(),   name='import_list'),
+    path('create/',           ImportStockCreateView.as_view(), name='import_create'),
+    path('<str:entry_date>/', ImportStockDetailView.as_view(), name='import_detail'),
+    path('<int:pk>/update/',  ImportStockUpdateView.as_view(), name='import_update'),
+    path('<int:pk>/delete/',  ImportStockDeleteView.as_view(), name='import_delete'),
 ]
 
