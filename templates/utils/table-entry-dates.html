@@ -1,0 +1,34 @@
+<!-- templates/utils/table-entry-date.html -->
+
+<!-- Shows Entry dates list in table format -->
+
+<!--
+  ( ARGUMENTS ACCEPTED BY THIS TEMPLATE )
+
+  entry_dates : List of entry dates
+  link_color  : Color of the link
+  url_name    : Django reverse url name
+  url_id      : args, Since every link will redirect to detail page
+  -->
+
+<br>
+<div class="table-responsive"> 
+
+  <table class="table table-striped table-borderless">
+
+    <!-- SHOW ALL ENTRY DATES -->
+    {% for entry_date in entry_dates %}
+      <tr>
+        <th class="text-center py-3">
+          <a href="{% url 'current_stock_list' %}" class="link-{{link_color}} link-underline-opacity-0 link-underline-opacity-100-hover">
+            {{entry_date}}
+          </a>
+        </th>
+        <th class="text-center text-secondary py-3">{{entry_date|date:'D'}}</th>
+      </tr>  
+    {% endfor %}
+
+  </table>
+</div>
+ 
+

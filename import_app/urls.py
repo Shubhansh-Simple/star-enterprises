@@ -4,14 +4,14 @@
 from django.urls    import path
 
 # local
-from .views import ImportListView, ImportCreateView, ImportDetailView, ImportUpdateView, ImportDeleteView
+from .views import ImportStockListView, ImportStockCreateView, ImportStockDetailView, ImportStockUpdateView, ImportStockDeleteView
 
 
 urlpatterns = [
-    path('',                 ImportListView.as_view(),   name='import_list'),
-    path('create/',          ImportCreateView.as_view(), name='import_create'),
-    path('<int:pk>/',        ImportDetailView.as_view(), name='import_detail'),
-    path('<int:pk>/update/', ImportUpdateView.as_view(), name='import_update'),
-    path('<int:pk>/delete/', ImportDeleteView.as_view(), name='import_delete'),
+    path('',                 ImportStockListView.as_view(),   name='import_list'),
+    path('create/',          ImportStockCreateView.as_view(), name='import_create'),
+    path('<int:pk>/',        ImportStockDetailView.as_view(), name='import_detail'),
+    path('<int:pk>/update/', ImportStockUpdateView.as_view(), name='import_update'),
+    path('<int:pk>/delete/', ImportStockDeleteView.as_view(), name='import_delete'),
 ]
 
