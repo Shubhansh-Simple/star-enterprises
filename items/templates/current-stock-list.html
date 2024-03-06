@@ -20,42 +20,38 @@
     <br>
     <div class="table-responsive"> 
 
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped">
 
         <!-- TABLE COLUMN HEADING -->
         <tr class="bg-dark text-white">
-          <th class="text-center">S.NO</th>
-          <th class="text-center">Item Name</th>
-          <th class="text-center">Quantity</th>
-          <th class="text-center">Last Updated</th>
+          <th class="text-center text-secondary">S.NO</th>
+          <th class="text-center text-secondary">Item Name</th>
+          <th class="text-center text-secondary">Quantity</th>
+          <th class="text-center text-secondary">Last Updated</th>
         </tr>
 
-        <!-- SHOW ALL ITEMS IN CURRENT STOCK -->
+        <!-- SHOW ALL ITEMS IN CURRENT STOCK LIST-->
         {% for item in current_stock_list %}
           <tr>
-            <td class="text-center">{{forloop.counter}}.)</td>
+            <td class="text-center">{{forloop.counter}}.</td>
             <td class="text-center">{{item.name}}</td>
             <td class="text-center">{{item.total_quantity}}</td>
-            <td class="text-center">{{item.updated_at}}</td>
+            <td class="text-center"><i>{{item.updated_at}}</i></td>
           </tr>  
         {% endfor %}
 
-        <!--LINE BREAK-->
-        <tr>
-          <td></td> <td></td> <td></td> <td></td>
-        </tr>
 
       </table>
     </div>
 
     <!-- TOTAL BOXES IN CURRENT STOCK -->
     <br>
-    <p class="bg-dark py-2" colspan="4"><mark>Total Quantity - {{final_total_quantity}} Boxes</mark></p>
+    <p class="bg-dark py-2" colspan="4"><b><mark>Total Quantity - {{final_total_quantity}} Boxes</mark></b></p>
 
   <!--STOCK DOES NOT EXIST-->
   {% else %}
 
-    <!-----INCLUDE NOT FOUND MSG TEMPLATE------->
+    <!-----INCLUDE NOT-FOUND-MSG TEMPLATE------->
     {% with not_found_msg="No Stock Left" %}
       {% include 'utils/item-not-found.html' %}
     {% endwith %}
