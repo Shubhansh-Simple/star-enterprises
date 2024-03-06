@@ -5,13 +5,15 @@
 
 <!-- PAGE TITLE -->
 {% block title %}
-  Current Stock
+  Current Stock List
 {% endblock %}
 
 {% block body_lower %}
-  <div class="container-fluid bg-dark text-info">
-    <h1><b>Current Stock Entries</b></h1>
-  </div>
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="dark" text_color="secondary" table_heading="Current Stock Entries" %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
 
   <!--STOCK EXIST-->
   {% if current_stock_list %}
