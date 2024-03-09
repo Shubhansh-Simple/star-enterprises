@@ -10,7 +10,7 @@ class Items(models.Model):
     '''Canteen Item Model'''
 
     name           = models.CharField('Item Name',max_length=70)
-    price          = models.PositiveSmallIntegerField('Item Price', validators=[MinValueValidator(10)])
+    price          = models.PositiveSmallIntegerField('Item Price', validators=[MinValueValidator(5)])
     total_quantity = models.PositiveSmallIntegerField('Total quantity of Item', default=0)
     is_active      = models.BooleanField('Status of Item', default=True)
     created_at     = models.DateTimeField(editable=False)
@@ -19,7 +19,7 @@ class Items(models.Model):
     class Meta:
         '''Adding sorting and user friendly model name for admin site'''
 
-        ordering            = ['name']
+        ordering            = ['name','price']
         verbose_name        = 'Item'
         verbose_name_plural = 'Items'
 
@@ -51,4 +51,4 @@ class Items(models.Model):
 
 
     def __str__(self):
-        return str(self.name)
+        return f'{self.name} - ({self.total_quantity} left)'
