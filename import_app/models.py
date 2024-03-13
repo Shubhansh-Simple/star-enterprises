@@ -2,8 +2,8 @@
 
 # django
 from django.db              import models
+from django.urls            import reverse
 from django.core.validators import MinValueValidator
-from django.utils           import timezone
 
 # local
 from items.models import Items
@@ -35,13 +35,17 @@ class Imports(models.Model):
         unique_together     = ['items','import_date']        # will raise IntegrityError
 
 
-    def save(self, *args, **kwargs):
+    def get_absolute_url(self):
+        '''Redirect the after creation & updation of items'''
 
-        '''Gives trouble in updates'''
-        #Total quantity in Items model should incremented by import_quantity
-        #self.items.total_quantity += self.import_quantity
-        #self.items.save()
-        super().save(*args, **kwargs)
+        # UPDATE
+        if self.pk:
+            return reverse('import_update', kwargs={'pk' : self.pk})
+
+        # CREATE
+        else:
+            return reverse('import_create')
+
 
 
     def __str__(self):

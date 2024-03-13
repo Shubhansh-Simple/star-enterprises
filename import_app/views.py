@@ -8,9 +8,6 @@ from django.contrib       import messages
 from django.http          import Http404, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-# python
-from datetime import datetime
-
 # local
 from .models                 import Imports
 from .forms                  import ImportCreateForm, ImportUpdateForm
@@ -38,7 +35,6 @@ class ImportStockCreateView(CreateView):
     model         = Imports
     form_class    = ImportCreateForm
     template_name = 'import-stock-create.html'
-    success_url   = '/import/create/'
 
     def form_invalid(self, form):
         print('FORM INVALID')
