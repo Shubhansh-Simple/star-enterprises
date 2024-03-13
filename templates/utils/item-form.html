@@ -17,13 +17,10 @@
           class="form-select form-select-lg form-control{% if form.items.errors %} is-invalid {%endif%}" 
           {% if form.fields.items.required %} required {% endif %}>
 
-    <option value>Choose your item</option>
-
     {% for choice in form.items.field.choices %}
-      {% if forloop.counter > 1 %}
-        <option value="{{choice.0}}">{{choice.1}}</option>
-      {% endif %}
+      <option value="{{choice.0}}" {% if choice.1 == form.initial.items %} selected{% endif %}>{{choice.1}}</option>
     {% endfor %}
+
   </select>
 
   <!-- IMPORT ITEM HELP TEXT -->
