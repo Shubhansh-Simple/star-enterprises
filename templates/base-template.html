@@ -31,7 +31,7 @@
         left : 0;
         z-index: 999;
         bottom: 50px;
-        border-radius: 50%;
+        border-radius: 30%;
       }
 
       .export_stock_btn {
@@ -39,7 +39,7 @@
         right: 0;
         z-index: 999;
         bottom: 50px;
-        border-radius: 50%;
+        border-radius: 30%;
       }
 
       {% block style_block %}
@@ -57,8 +57,8 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a href="/" style="text-decoration: none;" class="text-white">
-            <span class="fs-4">Home</span>
+          <a href="{% url 'current_stock_list' %}" style="text-decoration: none;" class="text-white">
+            <span class="fs-4">Stock</span>
           </a>
 
           <button class="navbar-toggler"
@@ -69,14 +69,6 @@
 
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-              <a class="nav-item nav-link active"
-                href="{% block about_me_link %}#{% endblock about_me_link %}" >
-                About
-              </a>
-            </div>
-          </div>
         </div>
       </nav>
     </header>
@@ -124,8 +116,8 @@
         <br>
 
         <!--------IMPORT/EXPORT BUTTONS----------->
-        <a class="btn btn-info import_stock_btn">Add</a>
-        <a class="btn btn-danger export_stock_btn">Supply</a>
+        <a class="btn btn-lg btn-warning import_stock_btn" href="{% url 'import_create' %}">Import</a>
+        <a class="btn btn-lg btn-danger  export_stock_btn" href="#">Export</a>
 
         <!-----------APPLICATION'S BODY------------>
         {% block body_lower %}
