@@ -19,7 +19,7 @@ class Items(models.Model):
     class Meta:
         '''Adding sorting and user friendly model name for admin site'''
 
-        ordering            = ['name','price']
+        ordering            = ['price','name']
         verbose_name        = 'Item'
         verbose_name_plural = 'Items'
 
@@ -36,12 +36,12 @@ class Items(models.Model):
 
         current_time = timezone.now()
 
-        # CREATE
+        # UPDATE
         if self.id:
             # Update updated_at only change in total quantity
             if self.cached_total_quantity != self.total_quantity: self.updated_at = current_time
 
-        # UPDATE
+        # CREATE
         else:
             # Setting created_at and updated_at
             self.created_at, self.updated_at = current_time, current_time
