@@ -12,7 +12,7 @@
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="dark" text_color="success" table_heading="Import Stock Entries" %}
+  {% with bg_color="success" text_color="muted" table_heading="Import Stock Dates" %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
@@ -35,7 +35,7 @@
   {% endif %}
 
   <br>
-  <a class="btn btn-success" href=#>Add Stock</a>
+  <a class="btn btn-success" href="{% url 'import_create' %}">Add Stock</a>
 {% endblock %}
 
 
