@@ -1,0 +1,85 @@
+<!-- import_app/templates/import-stock-update.html -- -->
+
+<!-- BASE TEMPLATE -->
+{% extends 'base-template.html' %}
+
+<!-- PAGE TITLE -->
+{% block title %}
+  Import Stock Update
+{% endblock %}
+
+
+{% block body_lower %}
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="dark" text_color="warning" table_heading="Update Imported Stock" table_sub_heading=import_stock_update.import_date %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
+
+  <!----------SUCCESS MESSAGE ( ON FORM SUBMISSION )------------>
+  {% if messages %}
+    <ul class="messages text-center">
+      {% for message in messages %}
+        {% if message.tags %}
+          <li class="list-group-item list-group-item-{{message.tags}}"><b>{{message}}</b></li>
+        {% else %}
+          <li class="list-group-item list-group-item-primary"><b>{{message}}</b></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <!--IMPORT RECORDS EXIST-->
+  {% if import_stock_update %}
+
+    <div class="container bg-light">
+      <hr>
+      <br>
+      <!------------IMPORT CREATE FORM------------->
+      <form method="post">
+        {% csrf_token %}
+
+        {% include 'utils/item-form.html' %}
+
+        <!-- FORM SUBMIT BUTTONS -->
+        <br>
+        <br>
+
+        <!-- UPDATE IMPORT ENTRY SUBMIT BUTTON -->
+        <button type="submit" class="btn btn-dark text-warning btn-md">
+          <b>Update Entry</b>
+        </button>
+
+        &nbsp; &nbsp; &nbsp;
+
+        <!-- BACK BUTTON TO IMPORT ENTRY LIST -->
+        <a class="btn btn-primary btn-md" href="{% url 'import_detail' import_stock_update.import_date %}">
+          <b>Back To Entries</b>
+        </a>
+
+      </form>
+      
+      <hr>
+      <br>
+      <br>
+      <!-- DELETE IMPORT ENTRY SUBMIT BUTTON -->
+      <form method="post" action="{% url 'import_delete' pk=import_stock_update.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-md w-50">
+          <b>Delete This Entry</b>
+        </button>
+      </form>
+    </div>
+
+  <!--IMPORT RECORDS DOES NOT EXIST-->
+  {% else %}
+
+    <!-----INCLUDE NOT FOUND MSG TEMPLATE------->
+    {% with not_found_msg="No Import Entry Found" %}
+      {% include 'utils/item-not-found.html' %}
+    {% endwith %}
+
+  {% endif %}
+
+
+{% endblock %}

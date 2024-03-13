@@ -108,7 +108,26 @@ class ImportStockDetailView(DetailView):
 
 class ImportStockUpdateView(UpdateView):
     '''Allow owner (only) to update the today's entry'''
-    pass
+
+    model               = Imports
+    form_class          = ImportUpdateForm
+    template_name       = 'import-stock-update.html'
+    context_object_name = 'import_stock_update'
+
+
+    def get_form_kwargs(self):
+        '''Adding default choice in imported Items widget'''
+
+        kwargs            = super().get_form_kwargs()
+        kwargs['initial'] = {'items' : str(self.get_object().items) }
+        return kwargs
+
+
+    def form_valid(self, form):
+        print('UPDATE FORM VALID')
+        print('Cleaned data - ',form.cleaned_data)
+
+        return super().form_valid(form)
 
 
 class ImportStockDeleteView(DeleteView):

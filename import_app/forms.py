@@ -22,8 +22,16 @@ class ImportCreateForm(forms.ModelForm):
 
 
 class ImportUpdateForm(forms.ModelForm):
-    '''Form for importing items'''
+    '''Form for updating imported stock'''
 
     class Meta:
         model  = Imports
         fields = ['items','import_quantity'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Items selection cannot be changed ( Update View )
+        self.fields['items'].required                 = False
+        self.fields['items'].widget.attrs['readonly'] = True 
+        self.fields['items'].widget.attrs['disabled'] = True 

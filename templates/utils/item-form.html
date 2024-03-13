@@ -9,12 +9,14 @@
 <!----------FORM FIELDS------------>
 <main class="form-signin">
 
-  <!----------IMPORT ITEM NAME (1/1)------------>
+  <!----------IMPORT ITEM (1/1)------------>
 
   <!-- IMPORT ITEM SELECT WIDGET -->
   <select id="{{form.items.id_for_label}}" 
           name="{{form.items.html_name}}" 
-          class="form-select form-select-lg form-control{% if form.items.errors %} is-invalid {%endif%}" 
+          class="form-select form-select-lg {% if form.items.errors %} is-invalid {%endif%}" 
+          {% if form.fields.items.widget.attrs.disabled %} disabled{% endif %}
+          {% if form.fields.items.widget.attrs.readonly %} readonly{% endif %}
           {% if form.fields.items.required %} required {% endif %}>
 
     {% for choice in form.items.field.choices %}
