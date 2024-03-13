@@ -31,6 +31,7 @@
   <!--IMPORT RECORDS EXIST-->
   {% if import_stock_detail %}
 
+      
     <br>
     <div class="table-responsive"> 
 
@@ -41,16 +42,20 @@
           <th class="text-center text-secondary">S.NO</th>
           <th class="text-center text-secondary">Item Name</th>
           <th class="text-center text-secondary">Import Quantity</th>
-          <th class="text-center text-secondary">Action</th>
         </tr>
 
         <!-- SHOW ALL IMPORTED STOCK AS PER DATE -->
         {% for import_stock in import_stock_detail %}
           <tr>
             <td class="text-center">{{forloop.counter}}.</td>
-            <td class="text-center">{{import_stock.items.name}}</td>
-            <td class="text-center">{{import_stock.import_quantity}}</td>
-            <td class="text-center"><a class="btn btn-secondary btn-sm" href="{% url 'import_update' import_stock.id %}">Edit</a></td>
+            <td class="text-center">
+              <a href="{% url 'import_update' import_stock.id %}" class="link-success link-underline-opacity-0 link-underline-opacity-100-hover">
+                <b>{{import_stock.items.name}}</b>
+              </a>
+            </td>
+            <td class="text-center">{{import_stock.import_quantity}}
+              <i><small> {% if import_stock.import_quantity > 1 %} boxes {% else %} box {% endif %} </small></i>
+            </td>
           </tr>  
         {% endfor %}
 
