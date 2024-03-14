@@ -13,6 +13,7 @@ from .models                 import Imports
 from .forms                  import ImportCreateForm, ImportUpdateForm
 from utils.custom_validators import validate_entry_date
 
+
 # URL - /import/
 class ImportStockListView(ListView):
     '''Shows the import dates list in which stock added'''
@@ -43,7 +44,8 @@ class ImportStockCreateView(CreateView):
 
 
     def form_valid(self, form):
-        '''Handle already exist data as well'''
+        '''Handle already exist data and Import Model as well'''
+
         print('FORM VALID')
         print('Cleaned data - ',form.cleaned_data)
 
@@ -65,7 +67,7 @@ class ImportStockCreateView(CreateView):
 
         # Success message
         msg = 'Item imported successfully!'
-        messages.info(self.request, msg, extra_tags='danger')
+        messages.info(self.request, msg, extra_tags='success')
 
         return HttpResponseRedirect( reverse('import_create') )
 
@@ -124,10 +126,41 @@ class ImportStockUpdateView(UpdateView):
 
 
     def form_valid(self, form):
+        '''Handle Import and Items model as well'''
+
         print('UPDATE FORM VALID')
         print('Cleaned data - ',form.cleaned_data)
 
-        return super().form_valid(form)
+        import_item   = self.get_object()
+        old_stock     = import_item.import_quantity
+        updated_stock = form.cleaned_data['import_quantity']
+
+        # CHANGE IN IMPORT-QUANTITY
+        if old_stock != updated_stock:
+
+            difference = abs(old_stock - updated_stock)
+
+            # Changing import-quantity
+            import_item.import_quantity = updated_stock
+            import_item.save()
+
+            # Changing total-quantity
+
+            # INCREMENT OF IMPORT-STOCK
+            if old_stock < updated_stock:
+                import_item.items.total_quantity += difference
+
+            # DECREMENT OF IMPORT-STOCK
+            else:
+                import_item.items.total_quantity -= difference
+
+            import_item.items.save()
+
+        # Success message
+        msg = 'Item updated successfully!'
+        messages.info(self.request, msg, extra_tags='success')
+
+        return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.import_date}) )
 
 
 class ImportStockDeleteView(DeleteView):

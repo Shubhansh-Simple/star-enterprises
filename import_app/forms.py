@@ -33,5 +33,4 @@ class ImportUpdateForm(forms.ModelForm):
 
         # Items selection cannot be changed ( Update View )
         self.fields['items'].required                 = False
-        self.fields['items'].widget.attrs['readonly'] = True 
-        self.fields['items'].widget.attrs['disabled'] = True 
+        self.fields['items'].widget.attrs['disabled'] = True
