@@ -20,7 +20,7 @@
           {% if form.fields.items.required %} required {% endif %}>
 
     {% for choice in form.items.field.choices %}
-      <option value="{{choice.0}}" {% if choice.1 == form.initial.items %} selected{% endif %}>{{choice.1}}</option>
+      <option value="{{choice.0}}" {% if choice.1 == form.initial.items%} selected{% endif %}>{{choice.1}}</option>
     {% endfor %}
 
   </select>
@@ -47,7 +47,7 @@
            placeholder="10"
            class="form-control{% if form.import_quantity.errors %} is-invalid {%endif%}"
            value="{{form.import_quantity.value}}"
-           {% if form.fields.items.required %} required {% endif %}>
+           {% if form.fields.import_quantity.required %} required {% endif %}>
 
     <!-- IMPORT QUANTITY LABEL -->
     <label for="{{form.import_quantity.id_for_label}} text-muted"><i>{{form.import_quantity.label}}</i></label>

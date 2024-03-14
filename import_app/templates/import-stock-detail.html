@@ -64,7 +64,9 @@
 
     <!-- TOTAL BOXES IN CURRENT STOCK -->
     <br>
-    <p class="bg-dark py-2" colspan="4"><b><mark>Total Import Quantity - {{total_import_quantity}} Boxes</mark></b></p>
+    <p class="bg-dark py-2" colspan="4">
+      <b><mark>Total Import Quantity - {{total_import_quantity}} {% if total_import_quantity > 1 %} Boxes {% else %} Box {% endif %}</mark></b>
+    </p>
 
   <!--IMPORT RECORDS DOES NOT EXIST-->
   {% else %}

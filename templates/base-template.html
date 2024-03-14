@@ -55,20 +55,15 @@
 
     <!-- HEADER - NAVBAR SECTION-->
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+      <nav class="navbar navbar-expand-lg" style="background-color: black;">
         <div class="container">
           <a href="{% url 'current_stock_list' %}" style="text-decoration: none;" class="text-white">
-            <span class="fs-4">My Stock</span>
+            <span class="fs-4">Stock</span>
           </a>
-
-          <button class="navbar-toggler"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#navbarNavAltMarkup"
-                  aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-
-            <span class="navbar-toggler-icon"></span>
-          </button>
+          <a href="{% url 'current_stock_list' %}" style="text-decoration: none;" class="text-white">
+            <span class="fs-4">Items</span>
+          </a>
         </div>
       </nav>
     </header>

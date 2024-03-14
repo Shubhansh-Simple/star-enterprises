@@ -45,7 +45,8 @@
 
     <!-- TOTAL BOXES IN CURRENT STOCK -->
     <br>
-    <p class="bg-dark py-2" colspan="4"><b><mark>Total Quantity - {{final_total_quantity}} Boxes</mark></b></p>
+    <p class="bg-dark py-2" colspan="4">
+    <b><mark>Total Quantity - {{final_total_quantity}} {% if final_total_quantity > 1 %} Boxes {% else %} Box {% endif %}</mark></b></p>
 
   <!--STOCK DOES NOT EXIST-->
   {% else %}
