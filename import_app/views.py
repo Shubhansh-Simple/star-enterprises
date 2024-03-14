@@ -165,5 +165,25 @@ class ImportStockUpdateView(UpdateView):
 
 class ImportStockDeleteView(DeleteView):
     '''Allow owner (only) to delete the today's entry'''
-    pass
+
+    model       = Imports
+
+    def get_success_url(self):
+        '''Redirect to DetailPage after deletion'''
+
+        return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.import_date})
+
+
+    def form_valid(self, form):
+        '''Add success messsage'''
+
+        # ITEMS MODEL - Decrease total quantity
+        import_item                       = self.get_object()
+        import_item.items.total_quantity -= import_item.import_quantity
+        import_item.items.save()
+
+        msg = 'Item deleted successfully!'
+        messages.info(self.request, msg, extra_tags='success')
+
+        return super().form_valid(form)
 
