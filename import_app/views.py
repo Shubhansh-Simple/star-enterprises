@@ -108,6 +108,7 @@ class ImportStockDetailView(DetailView):
         return context
 
 
+# URL - /import/<int:pk>/update/
 class ImportStockUpdateView(UpdateView):
     '''Allow owner (only) to update the today's entry'''
 
@@ -163,6 +164,7 @@ class ImportStockUpdateView(UpdateView):
         return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.import_date}) + '#focus' )
 
 
+# URL - /import/<int:pk>/delete/
 class ImportStockDeleteView(DeleteView):
     '''Allow owner (only) to delete the today's entry'''
 

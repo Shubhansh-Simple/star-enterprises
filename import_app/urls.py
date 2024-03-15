@@ -1,7 +1,7 @@
-#import_app/urls.py
+# import_app/urls.py
 
 # django
-from django.urls    import path
+from django.urls import path
 
 # local
 from .views import ImportStockListView, ImportStockCreateView, ImportStockDetailView, ImportStockUpdateView, ImportStockDeleteView

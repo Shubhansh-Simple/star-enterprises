@@ -7,7 +7,6 @@ from django.core.validators import MinValueValidator
 
 # local
 from items.models import Items
-from django.conf  import settings
 
 
 class Imports(models.Model):
@@ -45,7 +44,6 @@ class Imports(models.Model):
         # CREATE
         else:
             return reverse('import_create') + '#focus'
-
 
 
     def __str__(self):

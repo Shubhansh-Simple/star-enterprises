@@ -1,3 +1,6 @@
+# import_app/apps.py
+
+# django
 from django.apps import AppConfig
 
 
