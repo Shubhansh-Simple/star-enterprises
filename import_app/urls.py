@@ -14,4 +14,3 @@ urlpatterns = [
     path('<int:pk>/update/',  ImportStockUpdateView.as_view(), name='import_update'),
     path('<int:pk>/delete/',  ImportStockDeleteView.as_view(), name='import_delete'),
 ]
-

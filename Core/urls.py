@@ -9,9 +9,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # custom apps
-    path('',        include('items.urls') ),
+    path('',        include('items.urls')      ),
     path('import/', include('import_app.urls') ),
     path('supply/', include('supply_app.urls') ),
+    path('report/', include('report_app.urls') )
 ]
 
 
