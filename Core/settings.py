@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'users',
     'items',
     'import_app',
+    'supply_app',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,52 @@
+<!-- import_app/templates/import-stock-create.html -->
+
+<!-- BASE TEMPLATE -->
+{% extends 'base-template.html' %}
+
+<!-- PAGE TITLE -->
+{% block title %}
+  Import Stock
+{% endblock %}
+
+{% block body_lower %}
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="warning" text_color="muted" table_heading="Arrival Stock Of Today" %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
+
+  <!----------SUCCESS MESSAGE ( ON FORM SUBMISSION )------------>
+  {% if messages %}
+    <ul class="messages text-center">
+      {% for message in messages %}
+        {% if message.tags %}
+          <li class="list-group-item list-group-item-{{message.tags}}"><b>{{message}}</b></li>
+        {% else %}
+          <li class="list-group-item list-group-item-primary"><b>{{message}}</b></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="container bg-light">
+    <hr>
+    <br>
+    <!------------IMPORT CREATE FORM------------->
+    <form method="post">
+      {% csrf_token %}
+
+      {% include 'utils/item-form.html' %}
+
+      <!-- FORM SUBMIT BUTTON -->
+      <br>
+      <br>
+      <button type="submit" class="btn btn-danger btn-md">
+        <b>Add To Stock</b>
+      </button>
+      <br>
+    </form>
+    <hr>
+  </div>
+
+
+{% endblock %}

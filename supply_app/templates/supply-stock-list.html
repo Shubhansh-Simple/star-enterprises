@@ -1,0 +1,42 @@
+<!-- import_app/templates/import-stock-list.html -- -->
+
+<!-- BASE TEMPLATE -->
+{% extends 'base-template.html' %}
+
+<!-- PAGE TITLE -->
+{% block title %}
+  Import Stock List
+{% endblock %}
+
+
+{% block body_lower %}
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="success" text_color="muted" table_heading="Import Stock Dates" %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
+
+  <!--IMPORT RECORDS EXIST-->
+  {% if import_stock_list %}
+
+    <!-----INCLUDE TABLE-ENTRY-DATE TEMPLATE------->
+    {% with link_color="success" entry_dates=import_stock_list %}
+      {% include 'utils/table-entry-dates.html' %}
+    {% endwith %}
+
+  <!--IMPORT RECORDS DOES NOT EXIST-->
+  {% else %}
+
+    <!-----INCLUDE NOT FOUND MSG TEMPLATE------->
+    {% with not_found_msg="No Import Entries Found" %}
+      {% include 'utils/item-not-found.html' %}
+    {% endwith %}
+
+  {% endif %}
+
+  <br>
+  <a class="btn btn-success" href="{% url 'import_create' %}#focus">Add Stock</a>
+{% endblock %}
+
+
+
