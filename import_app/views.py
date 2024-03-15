@@ -69,7 +69,7 @@ class ImportStockCreateView(CreateView):
         msg = 'Item imported successfully!'
         messages.info(self.request, msg, extra_tags='success')
 
-        return HttpResponseRedirect( reverse('import_create') )
+        return HttpResponseRedirect( reverse('import_create')+'#focus' )
 
 
 # URL - /import/<str:entry_date>/
@@ -160,7 +160,7 @@ class ImportStockUpdateView(UpdateView):
         msg = 'Item updated successfully!'
         messages.info(self.request, msg, extra_tags='success')
 
-        return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.import_date}) )
+        return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.import_date}) + '#focus' )
 
 
 class ImportStockDeleteView(DeleteView):
@@ -171,7 +171,7 @@ class ImportStockDeleteView(DeleteView):
     def get_success_url(self):
         '''Redirect to DetailPage after deletion'''
 
-        return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.import_date})
+        return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.import_date}) + '#focus'
 
 
     def form_valid(self, form):
@@ -183,7 +183,7 @@ class ImportStockDeleteView(DeleteView):
         import_item.items.save()
 
         msg = 'Item deleted successfully!'
-        messages.info(self.request, msg, extra_tags='success')
+        messages.info(self.request, msg, extra_tags='dark')
 
         return super().form_valid(form)
 

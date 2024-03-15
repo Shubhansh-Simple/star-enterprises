@@ -40,11 +40,11 @@ class Imports(models.Model):
 
         # UPDATE
         if self.pk:
-            return reverse('import_detail', kwargs={'entry_date' : self.import_date})
+            return reverse('import_detail', kwargs={'entry_date' : self.import_date}) + '#focus'
 
         # CREATE
         else:
-            return reverse('import_create')
+            return reverse('import_create') + '#focus'
 
 
 

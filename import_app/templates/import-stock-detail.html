@@ -49,7 +49,7 @@
           <tr>
             <td class="text-center">{{forloop.counter}}.</td>
             <td class="text-center">
-              <a href="{% url 'import_update' import_stock.id %}" class="link-success link-underline-opacity-0 link-underline-opacity-100-hover">
+              <a href="{% url 'import_update' import_stock.id %}#focus" class="link-success link-underline-opacity-0 link-underline-opacity-100-hover">
                 <b>{{import_stock.items.name}}</b>
               </a>
             </td>
@@ -79,8 +79,8 @@
   {% endif %}
 
   <br>
-  <a class="btn btn-primary" href="{% url 'import_list' %}">&nbsp; Back &nbsp;</a>
-  <a class="btn btn-success" href="{% url 'import_create' %}">Add Stock</a>
+  <a class="btn btn-primary" href="{% url 'import_list' %}#focus">&nbsp; Back &nbsp;</a>
+  <a class="btn btn-success" href="{% url 'import_create' %}#focus">Add Stock</a>
 {% endblock %}
 
 

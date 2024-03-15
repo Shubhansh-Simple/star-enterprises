@@ -58,7 +58,7 @@
 
       <nav class="navbar navbar-expand-lg" style="background-color: black;">
         <div class="container">
-          <a href="{% url 'current_stock_list' %}" style="text-decoration: none;" class="text-white">
+          <a href="{% url 'current_stock_list' %}#focus" style="text-decoration: none;" class="text-white">
             <span class="fs-4">Stock</span>
           </a>
           <a href="{% url 'current_stock_list' %}" style="text-decoration: none;" class="text-white">
@@ -99,7 +99,7 @@
           <div class="container">
             {% block body_upper %}
                 <p class="bg-dark py-2" style="border-radius:75px 11px">
-                  <a href="{% url 'import_list' %}" class="btn btn-success my-2"> Import Stock </a>&nbsp;&nbsp;
+                  <a href="{% url 'import_list' %}#focus" class="btn btn-success my-2"> Import Stock </a>&nbsp;&nbsp;
                   <a href="#" class="btn btn-primary text-white my-2"> Daily Report </a>&nbsp;&nbsp;
                   <a href="#" class="btn btn-danger my-2"> Supply Stock </a>
                 </p>
@@ -111,7 +111,7 @@
         <br>
 
         <!--------IMPORT/EXPORT BUTTONS----------->
-        <a class="btn btn-lg btn-warning import_stock_btn" href="{% url 'import_create' %}">Import</a>
+        <a class="btn btn-lg btn-warning import_stock_btn" href="{% url 'import_create' %}#focus">Import</a>
         <a class="btn btn-lg btn-danger  export_stock_btn" href="#">Export</a>
 
         <!-----------APPLICATION'S BODY------------>
