@@ -51,15 +51,19 @@ class ImportStockCreateView(CreateView):
 
         today = timezone.now().date()
 
+        # Form Data Input
+        items_input            = form.cleaned_data['items']
+        import_quantity_input = form.cleaned_data['import_quantity']
+
         # Already exist
         try:
-            import_item = Imports.objects.get(import_date=today, items=form.cleaned_data['items'])
-            import_item.import_quantity += form.cleaned_data['import_quantity']
+            import_item = Imports.objects.get(import_date=today, items=items_input)
+            import_item.import_quantity += import_quantity_input
             import_item.save()
 
         # Newly created
         except Imports.DoesNotExist:
-            Imports.objects.create(items=form.cleaned_data['items'], import_quantity=form.cleaned_data['import_quantity'])
+            Imports.objects.create(items=items_input, import_quantity=import_quantity_input)
 
         # ITEMS MODEL - Increase total quantity
         form.instance.items.total_quantity += form.cleaned_data['import_quantity']
