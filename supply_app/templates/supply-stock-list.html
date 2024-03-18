@@ -1,41 +1,41 @@
-<!-- import_app/templates/import-stock-list.html -- -->
+<!-- supply_app/templates/supply-stock-list.html -- -->
 
 <!-- BASE TEMPLATE -->
 {% extends 'base-template.html' %}
 
 <!-- PAGE TITLE -->
 {% block title %}
-  Import Stock List
+  Supply Stock List
 {% endblock %}
 
 
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="success" text_color="muted" table_heading="Import Stock Dates" %}
+  {% with bg_color="danger" text_color="white" table_heading="Supply Stock Dates" %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
-  <!--IMPORT RECORDS EXIST-->
-  {% if import_stock_list %}
+  <!--SUPPLY RECORDS EXIST-->
+  {% if supply_stock_list %}
 
     <!-----INCLUDE TABLE-ENTRY-DATE TEMPLATE------->
-    {% with link_color="success" entry_dates=import_stock_list %}
+    {% with link_color="danger" url_name='supply_detail' entry_dates=supply_stock_list %}
       {% include 'utils/table-entry-dates.html' %}
     {% endwith %}
 
-  <!--IMPORT RECORDS DOES NOT EXIST-->
+  <!--SUPPLY RECORDS DOES NOT EXIST-->
   {% else %}
 
     <!-----INCLUDE NOT FOUND MSG TEMPLATE------->
-    {% with not_found_msg="No Import Entries Found" %}
+    {% with not_found_msg="No Supply Entries Found" %}
       {% include 'utils/item-not-found.html' %}
     {% endwith %}
 
   {% endif %}
 
   <br>
-  <a class="btn btn-success" href="{% url 'import_create' %}#focus">Add Stock</a>
+  <a class="btn btn-danger" href="{% url 'supply_create' %}#focus">Supply Stock</a>
 {% endblock %}
 
 

@@ -11,8 +11,8 @@ from .models import Supplys
 class SupplysAdmin(ModelAdmin):
     '''Modify supplys representation in admin site'''
 
-    readonly_fields = ['id', 'supply_date']
-    list_display    = ('items','id','supply_quantity','supply_date')
+    readonly_fields = ['id', 'entry_date']
+    list_display    = ('items','id','quantity','entry_date')
 
 # Register your models here.
 admin.site.register(Supplys, SupplysAdmin)

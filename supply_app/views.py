@@ -1,6 +1,8 @@
 # supply_app/views.py
 
 # django
+from django.http          import Http404
+from django.db.models     import Sum
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 # local
@@ -20,7 +22,7 @@ class SupplyStockListView(ListView):
     def get_queryset(self):
         '''Returns only supply stock dates'''
 
-        queryset = Supplys.objects.values_list('supply_date',flat=True).distinct()
+        queryset = Supplys.objects.values_list('entry_date',flat=True).distinct()
         return queryset
 
 
@@ -40,6 +42,32 @@ class SupplyStockDetailView(DetailView):
     model               = Supplys
     template_name       = 'supply-stock-detail.html'
     context_object_name = 'supply_stock_detail'
+
+
+    def get_object(self, queryset=None):
+        '''Returns all entries of supplied stock of provided dates'''
+
+        # Validate provided entry date
+        entry_date = validate_entry_date( self.kwargs['entry_date'] )
+
+        if entry_date:
+            obj_supply = Supplys.objects.filter(entry_date=entry_date)
+            return obj_supply
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        '''Adding Entry-date and total-supply-quantity'''
+
+        context      = super().get_context_data(**kwargs)
+        supply_stock = self.get_object()
+
+        # Entry date
+        context['entry_date'] = supply_stock[0].entry_date if supply_stock else self.kwargs['entry_date']
+
+        # Total supply quantity of entry date
+        context['total_supply_quantity'] = supply_stock.aggregate(totalling=Sum('quantity'))['totalling']
+
+        return context
 
 
 # URL - /supply/<int:pk>/update/

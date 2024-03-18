@@ -12,7 +12,7 @@ class SupplyCreateForm(forms.ModelForm):
 
     class Meta:
         model  = Supplys
-        fields = ['items','supply_quantity'] 
+        fields = ['items','quantity'] 
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,7 +26,7 @@ class SupplyUpdateForm(forms.ModelForm):
 
     class Meta:
         model  = Supplys
-        fields = ['items','supply_quantity'] 
+        fields = ['items','quantity'] 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
