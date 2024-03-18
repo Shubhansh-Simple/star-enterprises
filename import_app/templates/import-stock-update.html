@@ -12,7 +12,7 @@
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="dark" text_color="warning" table_heading="Update Imported Stock" table_sub_heading=import_stock_update.import_date %}
+  {% with bg_color="dark" text_color="warning" table_heading="Update Imported Stock" table_sub_heading=import_stock_update.entry_date %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
@@ -53,7 +53,7 @@
         &nbsp; &nbsp; &nbsp;
 
         <!-- BACK BUTTON TO IMPORT ENTRY LIST -->
-        <a class="btn btn-primary btn-md" href="{% url 'import_detail' import_stock_update.import_date %}#focus">
+        <a class="btn btn-primary btn-md" href="{% url 'import_detail' import_stock_update.entry_date %}#focus">
           <b>Back To Entries</b>
         </a>
 

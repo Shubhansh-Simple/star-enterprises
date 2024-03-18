@@ -12,7 +12,7 @@ class ImportCreateForm(forms.ModelForm):
 
     class Meta:
         model  = Imports
-        fields = ['items','import_quantity'] 
+        fields = ['items','quantity'] 
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,7 +26,7 @@ class ImportUpdateForm(forms.ModelForm):
 
     class Meta:
         model  = Imports
-        fields = ['items','import_quantity'] 
+        fields = ['items','quantity'] 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

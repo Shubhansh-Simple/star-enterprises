@@ -15,7 +15,7 @@
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
-  <!----------SUCCESS MESSAGE ( ON FORM SUBMISSION )------------>
+  <!----------SUCCESS MESSAGE ( ON IMPORTED STOCK )------------>
   {% if messages %}
     <ul class="messages text-center">
       {% for message in messages %}
@@ -28,10 +28,10 @@
     </ul>
   {% endif %}
 
+
   <!--IMPORT RECORDS EXIST-->
   {% if import_stock_detail %}
 
-      
     <br>
     <div class="table-responsive"> 
 
@@ -53,8 +53,8 @@
                 <b>{{import_stock.items.name}}</b>
               </a>
             </td>
-            <td class="text-center">{{import_stock.import_quantity}}
-              <i><small> {% if import_stock.import_quantity > 1 %} boxes {% else %} box {% endif %} </small></i>
+            <td class="text-center">{{import_stock.quantity}}
+              <i><small> {% if import_stock.quantity > 1 %} boxes {% else %} box {% endif %} </small></i>
             </td>
           </tr>  
         {% endfor %}

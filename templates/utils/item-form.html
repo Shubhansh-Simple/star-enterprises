@@ -2,7 +2,7 @@
 
 <!--
   ITEM FORM TEMPLATE FOR INCLUDE
-  USED IN CREATE-VIEW, UPDATE-VIEW, DETAIL-VIEW 
+  USED IN CREATE-VIEW, UPDATE-VIEW
   DRY PRINCIPLES
   -->
 
@@ -14,7 +14,7 @@
   <!-- IMPORT ITEM SELECT WIDGET -->
   <select id="{{form.items.id_for_label}}" 
           name="{{form.items.html_name}}" 
-          class="form-select form-select-lg {% if form.items.errors %} is-invalid {%endif%}" 
+          class="form-select form-select-lg {% if form.items.errors %} is-invalid {% endif %}" 
           {% if form.fields.items.widget.attrs.disabled %} disabled{% endif %}
           {% if form.fields.items.widget.attrs.readonly %} readonly{% endif %}
           {% if form.fields.items.required %} required {% endif %}>
@@ -42,21 +42,21 @@
 
     <!-- IMPORT QUANTITY INPUT -->
     <input type="number"
-           id="{{form.import_quantity.id_for_label}}"
-           name="{{form.import_quantity.html_name}}"
+           id="{{form.quantity.id_for_label}}"
+           name="{{form.quantity.html_name}}"
            placeholder="10"
-           class="form-control{% if form.import_quantity.errors %} is-invalid {%endif%}"
-           value="{{form.import_quantity.value}}"
-           {% if form.fields.import_quantity.required %} required {% endif %}>
+           class="form-control{% if form.quantity.errors %} is-invalid {%endif%}"
+           value="{{form.quantity.value}}"
+           {% if form.fields.quantity.required %} required {% endif %}>
 
     <!-- IMPORT QUANTITY LABEL -->
-    <label for="{{form.import_quantity.id_for_label}} text-muted"><i>{{form.import_quantity.label}}</i></label>
+    <label for="{{form.quantity.id_for_label}} text-muted"><i>{{form.quantity.label}}</i></label>
 
     <!-- IMPORT QUANTITY HELP TEXT -->
-    <small class="text-muted"><i>({{form.import_quantity.help_text}})</i></small>
+    <small class="text-muted"><i>({{form.quantity.help_text}})</i></small>
     
     <!-- IMPORT QUANTITY ERRORS MSG -->
-    {% for error in form.import_quantity.errors %}
+    {% for error in form.quantity.errors %}
       <div class="invalid-feedback">
         <b>{{error}}</b>
       </div>

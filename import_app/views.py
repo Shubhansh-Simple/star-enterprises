@@ -25,7 +25,7 @@ class ImportStockListView(ListView):
     def get_queryset(self):
         '''Returns only import stock dates'''
 
-        queryset = Imports.objects.values_list('import_date',flat=True).distinct()
+        queryset = Imports.objects.values_list('entry_date',flat=True).distinct()
         return queryset
 
 
@@ -52,21 +52,21 @@ class ImportStockCreateView(CreateView):
         today = timezone.now().date()
 
         # Form Data Input
-        items_input            = form.cleaned_data['items']
-        import_quantity_input = form.cleaned_data['import_quantity']
+        item_input     = form.cleaned_data['items']
+        quantity_input = form.cleaned_data['quantity']
 
         # Already exist
         try:
-            import_item = Imports.objects.get(import_date=today, items=items_input)
-            import_item.import_quantity += import_quantity_input
+            import_item = Imports.objects.get(entry_date=today, items=item_input)
+            import_item.quantity += quantity_input
             import_item.save()
 
         # Newly created
         except Imports.DoesNotExist:
-            Imports.objects.create(items=items_input, import_quantity=import_quantity_input)
+            Imports.objects.create(items=item_input, quantity=quantity_input)
 
         # ITEMS MODEL - Increase total quantity
-        form.instance.items.total_quantity += form.cleaned_data['import_quantity']
+        form.instance.items.total_quantity += form.cleaned_data['quantity']
         form.instance.items.save()
 
         # Success message
@@ -92,7 +92,7 @@ class ImportStockDetailView(DetailView):
         entry_date = validate_entry_date( self.kwargs['entry_date'] )
 
         if entry_date:
-            obj_import = Imports.objects.filter(import_date=entry_date)
+            obj_import = Imports.objects.filter(entry_date=entry_date)
             return obj_import
         raise Http404
 
@@ -100,14 +100,17 @@ class ImportStockDetailView(DetailView):
     def get_context_data(self, **kwargs):
         '''Adding Entry-date and total-import-quantity'''
 
-        context = super().get_context_data(**kwargs)
+        context      = super().get_context_data(**kwargs)
+        import_stock = self.get_object()
 
         # Entry date
-        context['entry_date'] = self.kwargs['entry_date']
+        if import_stock:
+            context['entry_date'] = import_stock[0].entry_date
+        else:
+            context['entry_date'] = self.kwargs['entry_date']
 
         # Total import quantity of entry date
-        import_stock                     = self.get_object()
-        context['total_import_quantity'] = import_stock.aggregate(totalling=Sum('import_quantity'))['totalling']
+        context['total_import_quantity'] = import_stock.aggregate(totalling=Sum('quantity'))['totalling']
 
         return context
 
@@ -137,8 +140,8 @@ class ImportStockUpdateView(UpdateView):
         print('Cleaned data - ',form.cleaned_data)
 
         import_item   = self.get_object()
-        old_stock     = import_item.import_quantity
-        updated_stock = form.cleaned_data['import_quantity']
+        old_stock     = import_item.quantity
+        updated_stock = form.cleaned_data['quantity']
 
         # CHANGE IN IMPORT-QUANTITY
         if old_stock != updated_stock:
@@ -146,7 +149,7 @@ class ImportStockUpdateView(UpdateView):
             difference = abs(old_stock - updated_stock)
 
             # Changing import-quantity
-            import_item.import_quantity = updated_stock
+            import_item.quantity = updated_stock
             import_item.save()
 
             # Changing total-quantity
@@ -165,7 +168,7 @@ class ImportStockUpdateView(UpdateView):
         msg = 'Item updated successfully!'
         messages.info(self.request, msg, extra_tags='success')
 
-        return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.import_date}) + '#focus' )
+        return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.entry_date}) + '#focus' )
 
 
 # URL - /import/<int:pk>/delete/
@@ -177,7 +180,7 @@ class ImportStockDeleteView(DeleteView):
     def get_success_url(self):
         '''Redirect to DetailPage after deletion'''
 
-        return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.import_date}) + '#focus'
+        return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.entry_date}) + '#focus'
 
 
     def form_valid(self, form):
@@ -185,7 +188,7 @@ class ImportStockDeleteView(DeleteView):
 
         # ITEMS MODEL - Decrease total quantity
         import_item                       = self.get_object()
-        import_item.items.total_quantity -= import_item.import_quantity
+        import_item.items.total_quantity -= import_item.quantity
         import_item.items.save()
 
         msg = 'Item deleted successfully!'

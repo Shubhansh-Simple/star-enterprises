@@ -18,20 +18,20 @@ class Imports(models.Model):
                                         help_text='Please choose a item to import',
                                         limit_choices_to={'is_active':True})
 
-    import_quantity = models.PositiveSmallIntegerField('Import Quantity', 
-                                                       validators=[MinValueValidator(1)], 
-                                                       help_text='Please enter a quantity greater than or equal to 1')
+    quantity = models.PositiveSmallIntegerField('Import Quantity', 
+                                                validators=[MinValueValidator(1)], 
+                                                help_text='Please enter a quantity greater than or equal to 1')
 
-    import_date     = models.DateField(auto_now_add=True)
+    entry_date     = models.DateField(auto_now_add=True)
 
 
     class Meta:
         verbose_name        = 'Import'
         verbose_name_plural = 'Imports'
-        ordering            = ['-import_date']
+        ordering            = ['-entry_date']
 
         # Avoid duplicate entry of a item in same date
-        unique_together     = ['items','import_date']        # will raise IntegrityError
+        unique_together     = ['items','entry_date']        # will raise IntegrityError
 
 
     def get_absolute_url(self):
@@ -39,7 +39,7 @@ class Imports(models.Model):
 
         # UPDATE
         if self.pk:
-            return reverse('import_detail', kwargs={'entry_date' : self.import_date}) + '#focus'
+            return reverse('import_detail', kwargs={'entry_date' : self.entry_date}) + '#focus'
 
         # CREATE
         else:
@@ -47,4 +47,4 @@ class Imports(models.Model):
 
 
     def __str__(self):
-        return f'{self.import_date} - {self.items.name}'
+        return f'{self.entry_date} - {self.items.name}'
