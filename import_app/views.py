@@ -104,10 +104,7 @@ class ImportStockDetailView(DetailView):
         import_stock = self.get_object()
 
         # Entry date
-        if import_stock:
-            context['entry_date'] = import_stock[0].entry_date
-        else:
-            context['entry_date'] = self.kwargs['entry_date']
+        context['entry_date'] = import_stock[0].entry_date if import_stock else self.kwargs['entry_date']
 
         # Total import quantity of entry date
         context['total_import_quantity'] = import_stock.aggregate(totalling=Sum('quantity'))['totalling']
