@@ -12,7 +12,7 @@ class ItemsAdmin(ModelAdmin):
     '''Modify item representation in admin site'''
 
     readonly_fields = ['id','created_at','updated_at']
-    list_display    = ('name','id','total_quantity','is_active','updated_at')
+    list_display    = ('name','id','quantity','is_active','updated_at')
 
 
 # Register models for admin site

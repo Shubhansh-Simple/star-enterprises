@@ -9,12 +9,12 @@ from django.core.validators import MinValueValidator
 class Items(models.Model):
     '''Canteen Item Model'''
 
-    name           = models.CharField('Item Name',max_length=70)
-    price          = models.PositiveSmallIntegerField('Item Price', validators=[MinValueValidator(5)])
-    total_quantity = models.PositiveSmallIntegerField('Total quantity of Item', default=0)
-    is_active      = models.BooleanField('Status of Item', default=True)
-    created_at     = models.DateTimeField(editable=False)
-    updated_at     = models.DateTimeField(editable=False)     # update only on changed in total quantity
+    name       = models.CharField('Item Name',max_length=70)
+    price      = models.PositiveSmallIntegerField('Item Price', validators=[MinValueValidator(5)])
+    quantity   = models.PositiveSmallIntegerField('Total quantity of Item', default=0)
+    is_active  = models.BooleanField('Status of Item', default=True)
+    created_at = models.DateTimeField(editable=False)
+    updated_at = models.DateTimeField(editable=False)     # update only on changed in total quantity
 
     class Meta:
         '''Adding sorting and user friendly model name for admin site'''
@@ -28,7 +28,7 @@ class Items(models.Model):
         '''Cached the total quantity for future use'''
 
         super().__init__(*args, **kwargs)
-        self.cached_total_quantity = self.total_quantity
+        self.cached_quantity = self.quantity
 
 
     def save(self, *args, **kwargs):
@@ -39,7 +39,7 @@ class Items(models.Model):
         # UPDATE
         if self.id:
             # Update updated_at only change in total quantity
-            if self.cached_total_quantity != self.total_quantity: self.updated_at = current_time
+            if self.cached_quantity != self.quantity: self.updated_at = current_time
 
         # CREATE
         else:
@@ -51,4 +51,4 @@ class Items(models.Model):
 
 
     def __str__(self):
-        return f'{self.name} - ({self.total_quantity} left)'
+        return f'{self.name} - ({self.quantity} left)'

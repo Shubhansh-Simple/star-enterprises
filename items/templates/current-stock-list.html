@@ -35,7 +35,7 @@
           <tr>
             <td class="text-center">{{forloop.counter}}.</td>
             <td class="text-center">{{item.name}}</td>
-            <td class="text-center">{{item.total_quantity}}</td>
+            <td class="text-center">{{item.quantity}}</td>
             <td class="text-center"><i>{{item.updated_at}}</i></td>
           </tr>  
         {% endfor %}
@@ -46,7 +46,7 @@
     <!-- TOTAL BOXES IN CURRENT STOCK -->
     <br>
     <p class="bg-dark py-2" colspan="4">
-    <b><mark>Total Quantity - {{final_total_quantity}} {% if final_total_quantity > 1 %} Boxes {% else %} Box {% endif %}</mark></b></p>
+    <b><mark>Total Quantity - {{total_quantity}} {% if total_quantity > 1 %} Boxes {% else %} Box {% endif %}</mark></b></p>
 
   <!--STOCK DOES NOT EXIST-->
   {% else %}

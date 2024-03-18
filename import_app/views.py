@@ -66,7 +66,7 @@ class ImportStockCreateView(CreateView):
             Imports.objects.create(items=item_input, quantity=quantity_input)
 
         # ITEMS MODEL - Increase total quantity
-        form.instance.items.total_quantity += form.cleaned_data['quantity']
+        form.instance.items.quantity += form.cleaned_data['quantity']
         form.instance.items.save()
 
         # Success message
@@ -153,11 +153,11 @@ class ImportStockUpdateView(UpdateView):
 
             # INCREMENT OF IMPORT-STOCK
             if old_stock < updated_stock:
-                import_item.items.total_quantity += difference
+                import_item.items.quantity += difference
 
             # DECREMENT OF IMPORT-STOCK
             else:
-                import_item.items.total_quantity -= difference
+                import_item.items.quantity -= difference
 
             import_item.items.save()
 
@@ -184,8 +184,8 @@ class ImportStockDeleteView(DeleteView):
         '''Add success messsage'''
 
         # ITEMS MODEL - Decrease total quantity
-        import_item                       = self.get_object()
-        import_item.items.total_quantity -= import_item.quantity
+        import_item                 = self.get_object()
+        import_item.items.quantity -= import_item.quantity
         import_item.items.save()
 
         msg = 'Item deleted successfully!'

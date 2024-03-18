@@ -27,7 +27,7 @@ class CurrentStockListView(ListView):
         context       = super().get_context_data(object_list=object_list, **kwargs)
         current_stock = self.get_queryset()
 
-        context['final_total_quantity'] = current_stock.aggregate(totalling=Sum('total_quantity'))['totalling']
+        context['total_quantity'] = current_stock.aggregate(totalling=Sum('quantity'))['totalling']
 
         return context
 
