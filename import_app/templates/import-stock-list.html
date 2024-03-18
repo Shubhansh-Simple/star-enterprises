@@ -20,7 +20,7 @@
   {% if import_stock_list %}
 
     <!-----INCLUDE TABLE-ENTRY-DATE TEMPLATE------->
-    {% with link_color="success" entry_dates=import_stock_list %}
+    {% with link_color="success" url_name='import_detail' entry_dates=import_stock_list %}
       {% include 'utils/table-entry-dates.html' %}
     {% endwith %}
 
