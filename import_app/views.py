@@ -1,11 +1,11 @@
 # import_app/views.py
 
 # django
-from django.db.models     import Sum
+from django.http          import Http404, HttpResponseRedirect
 from django.urls          import reverse, reverse_lazy
 from django.utils         import timezone
 from django.contrib       import messages
-from django.http          import Http404, HttpResponseRedirect
+from django.db.models     import Sum
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 # local
@@ -57,7 +57,7 @@ class ImportStockCreateView(CreateView):
 
         # Already exist
         try:
-            import_item = Imports.objects.get(entry_date=today, items=item_input)
+            import_item           = Imports.objects.get(entry_date=today, items=item_input)
             import_item.quantity += quantity_input
             import_item.save()
 
@@ -65,8 +65,8 @@ class ImportStockCreateView(CreateView):
         except Imports.DoesNotExist:
             Imports.objects.create(items=item_input, quantity=quantity_input)
 
-        # ITEMS MODEL - Increase total quantity
-        form.instance.items.quantity += form.cleaned_data['quantity']
+        # ITEMS MODEL - Increased by imported quantity
+        form.instance.items.quantity += quantity_input
         form.instance.items.save()
 
         # Success message
