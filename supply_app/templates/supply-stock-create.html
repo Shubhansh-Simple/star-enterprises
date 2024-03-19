@@ -11,7 +11,7 @@
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="warning" text_color="muted" table_heading="Arrival Stock Of Today" %}
+  {% with bg_color="danger" text_color="white" table_heading="Supply Stock Of Today" %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
@@ -41,7 +41,7 @@
       <br>
       <br>
       <button type="submit" class="btn btn-danger btn-md">
-        <b>Add To Stock</b>
+        <b>Supply Now</b>
       </button>
       <br>
     </form>
