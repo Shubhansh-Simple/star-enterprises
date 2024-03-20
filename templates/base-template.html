@@ -23,6 +23,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
           crossorigin="anonymous">
 
+    <!-- SHOULD BE OUTLINE CSS -->
     <style>
       .footer{ margin-top :auto; }
 
@@ -100,7 +101,7 @@
             {% block body_upper %}
                 <p class="bg-dark py-2" style="border-radius:75px 11px">
                   <a href="{% url 'import_list' %}#focus" class="btn btn-success my-2"> Import Stock </a>&nbsp;&nbsp;
-                  <a href="#" class="btn btn-primary text-white my-2"> Daily Report </a>&nbsp;&nbsp;
+                  <a href="{% url 'report_list' %}#focus" class="btn btn-primary text-white my-2"> Daily Report </a>&nbsp;&nbsp;
                   <a href="{% url 'supply_list' %}#focus" class="btn btn-danger my-2"> Supply Stock </a>
                 </p>
                 <br>

@@ -7,7 +7,7 @@ from django.db import models
 class Reports(models.Model):
     '''Canteen Daily Reports Model'''
 
-    entry_date = models.DateField(auto_now_add=True)
+    entry_date = models.DateField(auto_now_add=True, unique=True)
 
 
     class Meta:

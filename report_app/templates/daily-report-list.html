@@ -1,0 +1,38 @@
+<!-- report_app/templates/daily-report-list.html -->
+
+<!-- BASE TEMPLATE -->
+{% extends 'base-template.html' %}
+
+<!-- PAGE TITLE -->
+{% block title %}
+  Daily Report List
+{% endblock %}
+
+
+{% block body_lower %}
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="primary" text_color="light" table_heading="Daily Report Dates" %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
+
+  <!--REPORT RECORDS EXIST-->
+  {% if daily_report_list %}
+
+    <!-----INCLUDE TABLE-ENTRY-DATE TEMPLATE------->
+    {% with link_color="primary" url_name='report_detail' entry_dates=daily_report_list %}
+      {% include 'utils/table-entry-dates.html' %}
+    {% endwith %}
+
+  <!--REPORT RECORDS DOES NOT EXIST-->
+  {% else %}
+
+    <!-----INCLUDE NOT FOUND MSG TEMPLATE------->
+    {% with not_found_msg="No Reports Found" %}
+      {% include 'utils/item-not-found.html' %}
+    {% endwith %}
+
+  {% endif %}
+
+{% endblock %}
+

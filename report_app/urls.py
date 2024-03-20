@@ -8,6 +8,6 @@ from .views import DailyReportListView, DailyReportDetailView
 
 
 urlpatterns = [
-    path('', DailyReportListView.as_view(), name='report_list'),
+    path('',                  DailyReportListView.as_view(),   name='report_list'),
     path('<str:entry_date>/', DailyReportDetailView.as_view(), name='report_detail'),
 ]
