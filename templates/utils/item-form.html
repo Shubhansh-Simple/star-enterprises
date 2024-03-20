@@ -9,9 +9,7 @@
 <!----------FORM FIELDS------------>
 <main class="form-signin">
 
-  <!----------IMPORT ITEM (1/1)------------>
-
-  <!-- IMPORT ITEM SELECT WIDGET -->
+  <!-- ITEM INPUT SELECTION WIDGET (1/1) -->
   <select id="{{form.items.id_for_label}}" 
           name="{{form.items.html_name}}" 
           class="form-select form-select-lg {% if form.items.errors %} is-invalid {% endif %}" 
@@ -25,10 +23,10 @@
 
   </select>
 
-  <!-- IMPORT ITEM HELP TEXT -->
+  <!-- ITEM HELP TEXT -->
   <small class="text-muted"><i>({{form.items.help_text}})</i></small>
 
-  <!-- IMPORT ITEM ERRORS MSG -->
+  <!-- ITEM ERRORS MSG -->
   {% for error in form.items.errors %}
     <div class="invalid-feedback">
       <b>{{error}}</b>
@@ -37,10 +35,10 @@
   <br>
   <br>
   
-  <!----------IMPORT QUANTITY (1/2)------------>
+  <!---------- ITEM QUANTITY INPUT ( IMPORT/SUPPLY )(1/2)------------>
   <div class="form-floating">
 
-    <!-- IMPORT QUANTITY INPUT -->
+    <!-- QUANTITY INPUT -->
     <input type="number"
            id="{{form.quantity.id_for_label}}"
            name="{{form.quantity.html_name}}"
@@ -49,13 +47,13 @@
            value="{{form.quantity.value}}"
            {% if form.fields.quantity.required %} required {% endif %}>
 
-    <!-- IMPORT QUANTITY LABEL -->
+    <!-- ITEM QUANTITY LABEL -->
     <label for="{{form.quantity.id_for_label}} text-muted"><i>{{form.quantity.label}}</i></label>
 
-    <!-- IMPORT QUANTITY HELP TEXT -->
+    <!-- ITEM QUANTITY HELP TEXT -->
     <small class="text-muted"><i>({{form.quantity.help_text}})</i></small>
     
-    <!-- IMPORT QUANTITY ERRORS MSG -->
+    <!-- ITEM QUANTITY ERRORS MSG -->
     {% for error in form.quantity.errors %}
       <div class="invalid-feedback">
         <b>{{error}}</b>
