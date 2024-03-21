@@ -32,4 +32,24 @@ class CurrentStockListView(ListView):
         return context
 
 
+# ITEMS CRUD OPERATIONS
+
+class ItemListView(ListView):
+    '''Return all the items of the canteen including non-active'''
+
+    model               = Items
+    template_name       = 'item-list.html'
+    context_object_name = 'item_list'
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        '''Add total items count including non-active items'''
+
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        item    = self.get_queryset()
+
+        context['total_items']  = item.count()
+        return context
+
+
 

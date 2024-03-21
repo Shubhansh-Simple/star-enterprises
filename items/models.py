@@ -9,7 +9,10 @@ from django.core.validators import MinValueValidator
 class Items(models.Model):
     '''Canteen Item Model'''
 
-    name       = models.CharField('Item Name',max_length=70, help_text='Enter your item\'s name')
+    name       = models.CharField('Item Name',
+                                  max_length=70, 
+                                  help_text='Enter your item\'s name')
+
     price      = models.PositiveSmallIntegerField('Item Price', 
                                                   validators=[MinValueValidator(5)], 
                                                   help_text='Enter your item\'s price (help in sorting the item sequentially)')

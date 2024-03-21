@@ -1,0 +1,76 @@
+<!--items/templates/item-list.html-->
+
+<!-- BASE TEMPLATE -->
+{% extends 'base-template.html' %}
+
+<!-- PAGE TITLE -->
+{% block title %}
+  Item List
+{% endblock %}
+
+<!-- REMOVING NAVIGATION BUTTONS -->
+{% block body_upper %}
+{% endblock %}
+
+{% block body_lower %}
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="dark" text_color="white" table_heading="Canteen Items List" %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
+
+  <!--CANTEEN ITEMS EXIST-->
+  {% if item_list %}
+    <br>
+    <div class="table-responsive"> 
+
+      <table class="table table-striped">
+
+        <!-- TABLE COLUMN HEADING -->
+        <tr>
+          <th class="text-center bg-dark text-white">S.NO</th>
+          <th class="text-center bg-dark text-white">Item Name</th>
+          <th class="text-center bg-dark text-white">Price</th>
+          <th class="text-center bg-dark text-white">Quantity</th>
+          <th class="text-center bg-dark text-white">Status</th>
+          <th class="text-center bg-dark text-white">Action</th>
+        </tr>
+
+        <!-- SHOW ALL ITEMS IN CURRENT STOCK LIST-->
+        {% for item in item_list %}
+          <tr>
+            <td class="text-center">{{forloop.counter}}.</td>
+            <td class="text-center {% if not item.is_active %} text-danger {% endif %}">
+              <b>{{item.name}}</b>
+            </td>
+            <td class="text-center">{{item.price}} <small>rs</small></td>
+            <td class="text-center">{{item.quantity}}</td>
+            <td class="text-center"><i>{{item.is_active}}</i></td>
+            <td class="text-center">Edit</td>
+
+          </tr>  
+        {% endfor %}
+
+      </table>
+    </div>
+
+    <!-- TOTAL BOXES IN CURRENT STOCK -->
+    <br>
+    <p class="bg-dark text-white py-1">
+      <b>Total Items - {{total_items}} {% if total_items > 1 %} Boxes {% else %} Box {% endif %}</b>
+    </p>
+    <br><br>
+
+  <!--ITEMS DOES NOT EXIST-->
+  {% else %}
+
+    <!-----INCLUDE NOT-FOUND-MSG TEMPLATE------->
+    {% with not_found_msg="No Items Found" %}
+      {% include 'utils/item-not-found.html' %}
+    {% endwith %}
+
+  {% endif %}
+
+  <a class="btn btn-dark" href="{% url 'import_create' %}#focus">Add Items</a>
+
+{% endblock %}
