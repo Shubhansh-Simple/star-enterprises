@@ -9,12 +9,25 @@ from django.core.validators import MinValueValidator
 class Items(models.Model):
     '''Canteen Item Model'''
 
-    name       = models.CharField('Item Name',max_length=70)
-    price      = models.PositiveSmallIntegerField('Item Price', validators=[MinValueValidator(5)])
-    quantity   = models.PositiveSmallIntegerField('Total quantity of Item', default=0)
-    is_active  = models.BooleanField('Status of Item', default=True)
-    created_at = models.DateTimeField(editable=False)
-    updated_at = models.DateTimeField(editable=False)     # update only on changed in total quantity
+    name       = models.CharField('Item Name',max_length=70, help_text='Enter your item\'s name')
+    price      = models.PositiveSmallIntegerField('Item Price', 
+                                                  validators=[MinValueValidator(5)], 
+                                                  help_text='Enter your item\'s price (help in sorting the item sequentially)')
+
+    quantity   = models.PositiveSmallIntegerField('Total quantity of Item', 
+                                                  default=0, 
+                                                  help_text='Item\'s current quantity')
+
+    is_active  = models.BooleanField('Status of Item', 
+                                     default=True, 
+                                     help_text='Item\'s availability')
+
+    created_at = models.DateTimeField(editable=False, 
+                                      help_text='It will take todays date on it\'s itself')
+
+    # update only on changed in total quantity
+    updated_at = models.DateTimeField(editable=False, 
+                                      help_text='It will take todays date on it\'s itself')
 
     class Meta:
         '''Adding sorting and user friendly model name for admin site'''
