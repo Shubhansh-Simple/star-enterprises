@@ -7,6 +7,7 @@ from django.urls  import reverse
 # local
 from items.models import Items
 
+
 class Supplys(models.Model):
     '''Canteen Export Stock Model'''
 
@@ -16,9 +17,9 @@ class Supplys(models.Model):
                                    help_text='Please choose a item to supply',
                                    limit_choices_to={'is_active' : True})
 
-    quantity   = models.SmallIntegerField('Supply Quantity', help_text='Please enter a quantity greater than or equal to 1')
+    quantity   = models.SmallIntegerField('Supply Quantity', help_text='Please enter your supplied quantity here')
 
-    entry_date = models.DateField(auto_now_add=True)
+    entry_date = models.DateField(auto_now_add=True, help_text='It will take todays date on it\'s own')
 
 
     class Meta:
