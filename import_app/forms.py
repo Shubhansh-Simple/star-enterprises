@@ -18,7 +18,7 @@ class ImportCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         # Update first item label in SELECT widget
-        self.fields['items'].empty_label = 'Choose Your Item'
+        self.fields['items'].empty_label = 'Choose Your Item To Import'
 
 
 class ImportUpdateForm(forms.ModelForm):
