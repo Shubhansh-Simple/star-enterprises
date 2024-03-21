@@ -21,7 +21,7 @@ class DailyReportListView(ListView):
     def get_queryset(self):
         '''Returns entry dates of daily reports'''
 
-        queryset =  Reports.objects.values_list('entry_date',flat=True)
+        queryset =  Reports.objects.values_list('entry_date',flat=True).distinct()
         return queryset
 
 
