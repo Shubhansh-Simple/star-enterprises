@@ -12,17 +12,17 @@ from items.models import Items
 class Imports(models.Model):
     '''Canteen Import Stock Model'''
 
-    items           = models.ForeignKey(Items, 
-                                        on_delete=models.PROTECT, 
-                                        verbose_name='Item Imported', 
-                                        help_text='Please choose a item to import',
-                                        limit_choices_to={'is_active':True})
+    items      = models.ForeignKey(Items,
+                                   on_delete=models.PROTECT,
+                                   verbose_name='Item Imported',
+                                   help_text='Please choose a item to import',
+                                   limit_choices_to={'is_active':True})
 
-    quantity = models.PositiveSmallIntegerField('Import Quantity', 
-                                                validators=[MinValueValidator(1)], 
-                                                help_text='Please enter a quantity greater than or equal to 1')
+    quantity   = models.PositiveSmallIntegerField('Import Quantity',
+                                                validators=[MinValueValidator(1)],
+                                                help_text='Please enter your imported quantity here')
 
-    entry_date     = models.DateField(auto_now_add=True)
+    entry_date = models.DateField(auto_now_add=True, help_text='It will take todays date on it\'s own')
 
 
     class Meta:
