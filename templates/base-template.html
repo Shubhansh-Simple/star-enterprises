@@ -62,7 +62,7 @@
           <a href="{% url 'current_stock_list' %}#focus" style="text-decoration: none;" class="text-white">
             <span class="fs-4">Stock</span>
           </a>
-          <a href="{% url 'current_stock_list' %}#focus" style="text-decoration: none;" class="text-white">
+          <a href="{% url 'item_list' %}#focus" style="text-decoration: none;" class="text-white">
             <span class="fs-4">Items</span>
           </a>
         </div>
@@ -73,41 +73,41 @@
     <main>
       <div class="text-center">
 
-        <div class="container-fluid bg-light">
+        {% block body_upper %}
+          <div class="container-fluid bg-light">
 
-          <!------------COMPANY'S TITLE-------------->
-          <div class="container">
-            <br><br>
+            <!------------COMPANY'S TITLE-------------->
+            <div class="container">
+              <br><br>
 
-            <figure class="text-center bg-white" style="border-radius:11px 95px">
+              <figure class="text-center bg-white" style="border-radius:11px 95px">
 
-              <!---------ORGANIZATION NAME------------->
-              <blockquote class="blockquote">
-                <h1 class="mt-2 mb-4"><b>Star Enterprises</b></h1>
-              </blockquote>
+                <!---------ORGANIZATION NAME------------->
+                <blockquote class="blockquote">
+                  <h1 class="mt-2 mb-4"><b>Star Enterprises</b></h1>
+                </blockquote>
 
-              <!------------OWNER'S NAME------------->
-              <figcaption class="blockquote-footer">
-                <i><b class="text-danger">Adil Usmani</b></i>
-              </figcaption>
-            </figure>
+                <!------------OWNER'S NAME------------->
+                <figcaption class="blockquote-footer">
+                  <i><b class="text-danger">Adil Usmani</b></i>
+                </figcaption>
+              </figure>
 
-            <br><h3 class="text-muted">Welcome</h3><br>
+              <br><h3 class="text-muted">Welcome</h3><br>
+            </div>
+
+
+            <!---------APP NAVIGATION BUTTONS--------->
+            <div class="container">
+              <p class="bg-dark py-2" style="border-radius:75px 11px">
+                <a href="{% url 'import_list' %}#focus" class="btn btn-success my-2"> Import Stock </a>&nbsp;&nbsp;
+                <a href="{% url 'report_list' %}#focus" class="btn btn-primary text-white my-2"> Daily Report </a>&nbsp;&nbsp;
+                <a href="{% url 'supply_list' %}#focus" class="btn btn-danger my-2"> Supply Stock </a>
+              </p>
+              <br>
+            </div>
           </div>
-
-
-          <!---------APP NAVIGATION BUTTONS--------->
-          <div class="container">
-            {% block body_upper %}
-                <p class="bg-dark py-2" style="border-radius:75px 11px">
-                  <a href="{% url 'import_list' %}#focus" class="btn btn-success my-2"> Import Stock </a>&nbsp;&nbsp;
-                  <a href="{% url 'report_list' %}#focus" class="btn btn-primary text-white my-2"> Daily Report </a>&nbsp;&nbsp;
-                  <a href="{% url 'supply_list' %}#focus" class="btn btn-danger my-2"> Supply Stock </a>
-                </p>
-                <br>
-            {% endblock %}
-          </div>
-        </div>
+        {% endblock %}
         <br>
         <br>
 
