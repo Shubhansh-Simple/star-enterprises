@@ -176,7 +176,7 @@ class ImportStockDeleteView(DeleteView):
     model       = Imports
 
     def get_success_url(self):
-        '''Redirect to DetailPage after deletion'''
+        '''Redirect to Import DetailPage after successfull deletion'''
 
         return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.entry_date}) + '#focus'
 
