@@ -29,16 +29,18 @@
     </ul>
   {% endif %}
 
-  <!--IMPORT RECORDS EXIST-->
+  <!--SUPPLY RECORDS EXIST-->
   {% if import_stock_update %}
 
     <div class="container bg-light">
       <hr>
       <br>
-      <!------------IMPORT CREATE FORM------------->
+
+      <!------------ITEM SUPPLY UPDATE FORM------------->
       <form method="post">
         {% csrf_token %}
 
+        <!--FORM FIELDS NAME - ITEM-SELECTION, ITEM-QUANTITY-->
         {% include 'utils/item-form.html' %}
 
         <!-- FORM SUBMIT BUTTONS -->
@@ -71,7 +73,7 @@
       </form>
     </div>
 
-  <!--IMPORT RECORDS DOES NOT EXIST-->
+  <!--SUPPLY RECORDS DOES NOT EXIST-->
   {% else %}
 
     <!-----INCLUDE NOT FOUND MSG TEMPLATE------->

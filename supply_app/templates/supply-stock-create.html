@@ -5,7 +5,7 @@
 
 <!-- PAGE TITLE -->
 {% block title %}
-  Import Stock
+  Supply Stock
 {% endblock %}
 
 {% block body_lower %}
@@ -31,10 +31,12 @@
   <div class="container bg-light">
     <hr>
     <br>
-    <!------------IMPORT CREATE FORM------------->
+
+    <!------------ITEM SUPPLY FORM------------->
     <form method="post">
       {% csrf_token %}
 
+      <!--FORM FIELDS NAME - ITEM-SELECTION, ITEM-QUANTITY-->
       {% include 'utils/item-form.html' %}
 
       <!-- FORM SUBMIT BUTTON -->

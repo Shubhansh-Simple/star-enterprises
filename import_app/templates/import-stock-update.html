@@ -35,10 +35,11 @@
     <div class="container bg-light">
       <hr>
       <br>
-      <!------------IMPORT CREATE FORM------------->
+      <!------------ITEM IMPORT UPDATE FORM------------->
       <form method="post">
         {% csrf_token %}
 
+        <!--FORM FIELDS NAME - ITEM-SELECTION, ITEM-QUANTITY-->
         {% include 'utils/item-form.html' %}
 
         <!-- FORM SUBMIT BUTTONS -->
