@@ -4,20 +4,21 @@
 from django.db              import models
 from django.urls            import reverse
 from django.utils           import timezone
-from django.core.validators import MinValueValidator
+from django.core.validators import MinLengthValidator, MinValueValidator
 
 
 class Items(models.Model):
     '''Canteen Item Model'''
 
     name       = models.CharField('Item Name',
-                                  max_length=70, 
+                                  max_length=50, 
                                   default='',
+                                  validators=[MinLengthValidator(5)],
                                   help_text='Enter your item\'s name')
 
     price      = models.PositiveSmallIntegerField('Item Price', 
                                                   validators=[MinValueValidator(5)], 
-                                                  help_text='Enter your item\'s price (help in sorting the item sequentially)')
+                                                  help_text='Enter your item\'s price')
 
     quantity   = models.PositiveSmallIntegerField('Total quantity of Item', 
                                                   default=0, 
@@ -27,11 +28,13 @@ class Items(models.Model):
                                      default=True, 
                                      help_text='Click to change item\'s availability')
 
-    created_at = models.DateTimeField(editable=False, 
+    created_at = models.DateTimeField('Created Time Of Item',
+                                      editable=False, 
                                       help_text='It will take todays date on it\'s itself')
 
     # update only on changed in total quantity
-    updated_at = models.DateTimeField(editable=False, 
+    updated_at = models.DateTimeField('Last Change In Quantity',
+                                      editable=False, 
                                       help_text='It will take todays date on it\'s itself')
 
     class Meta:
@@ -65,7 +68,7 @@ class Items(models.Model):
             self.created_at, self.updated_at = current_time, current_time
 
         # Ensuring Proper Item Name
-        self.name = self.name.strip().title()
+        self.name = self.name.title()
 
         super().save(*args, **kwargs)
 

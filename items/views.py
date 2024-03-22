@@ -1,12 +1,15 @@
 # items/views.py
 
 # django
-from django.views.generic import ListView, CreateView, UpdateView
-from django.db.models     import Sum
 from django.urls          import reverse
+from django.contrib       import messages
+from django.db.models     import Sum
+from django.views.generic import DeleteView, ListView, CreateView, UpdateView
 
 # local
-from .models import Items
+from .models               import Items
+from utils.custom_messages import generate_msg
+
 
 # URL - HOMEPAGE OF APPLICATION
 class CurrentStockListView(ListView):
@@ -70,15 +73,29 @@ class ItemsCreateView(CreateView):
     def form_invalid(self, form):
         print('FORM INVALID')
         print(f'{form.errors}')
+        print(f'CLEANED DATA - {form.cleaned_data}')
+        return super().form_invalid(form)
 
 
     def form_valid(self, form):
+        '''Adding success message of form data is valid'''
+        
         print('FORM VALID')
         print(f'form data - {form.cleaned_data}')
+
+        # Success message
+        msg = generate_msg( 0, form.cleaned_data['name'], 'added' )
+        messages.info(self.request, msg, extra_tags='success')
+
         return super().form_valid(form)
 
 
 # URL - /create/
 class ItemsUpdateView(UpdateView):
     '''Update canteen items name, price & availability'''
+    pass
+
+
+class ItemsDeleteView(DeleteView):
+    '''Delete canteen items if not used in any table (models.PROTECT)'''
     pass

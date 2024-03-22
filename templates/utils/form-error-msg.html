@@ -1,0 +1,18 @@
+<!-- templates/utils/form-error-msg.html -->
+
+<!--
+  FORM ERR MSG TEMPLATE FOR INCLUDE
+  PROVIDE FIX ERROR MSG IF ANY FIELD HAS ERROR
+  'Please correct the errors below'
+  DRY PRINCIPLES
+  -->
+
+<!--IF ANY ERROR RAISED, SEPARATE ALERT FOR THEM-->
+{% if form.errors %}
+  {% if form.errors|length > 1%}
+    <span class="border border-danger text-danger p-3"><b>Please correct the errors below.</b></span>
+  {% else %}
+    <span class="border border-danger text-danger p-3"><b>Please correct the error below.</b></span>
+  {% endif %} 
+  <br><br><br>
+{% endif %}
