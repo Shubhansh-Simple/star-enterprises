@@ -182,7 +182,7 @@ class ImportStockDeleteView(DeleteView):
 
 
     def form_valid(self, form):
-        '''Add success messsage'''
+        '''Handle the Items models as well with Imports model'''
 
         # ITEMS MODEL - Decrease total quantity
         import_item                 = self.get_object()

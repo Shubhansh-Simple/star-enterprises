@@ -17,6 +17,7 @@ class Supplys(models.Model):
                                    help_text='Please choose a item to supply',
                                    limit_choices_to={'is_active' : True})
 
+    # allow negative values
     quantity   = models.SmallIntegerField('Supply Quantity', help_text='Please enter your supplied quantity here')
 
     entry_date = models.DateField(auto_now_add=True, help_text='It will take todays date on it\'s own')
@@ -34,13 +35,17 @@ class Supplys(models.Model):
     def get_absolute_url(self):
         '''Redirect the user after creation and updation of items'''
 
+        print("GET ABSOLUTE URL")
+
         # UPDATE
         if self.pk:
-            pass
+            print('UPDATE')
+            return reverse('supply_detail', kwargs={'entry_date' : self.entry_date}) + '#focus'
 
         # CREATE
         else:
-            pass
+            print('CREATE')
+            return reverse('supply_create') + '#focus'
 
 
     def __str__(self):

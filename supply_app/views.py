@@ -1,14 +1,19 @@
 # supply_app/views.py
 
 # django
-from django.http          import Http404
+from django.urls          import reverse
+from django.http          import Http404, HttpResponseRedirect
+from django.utils         import timezone
+from django.contrib       import messages
 from django.db.models     import Sum
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+
 
 # local
 from .models                 import Supplys
 from .forms                  import SupplyCreateForm, SupplyUpdateForm
 from utils.custom_validators import validate_entry_date
+from utils.custom_messages   import generate_msg
 
 
 # URL - /supply/
@@ -33,6 +38,45 @@ class SupplyStockCreateView(CreateView):
     model         = Supplys
     form_class    = SupplyCreateForm
     template_name = 'supply-stock-create.html'
+
+
+    def form_invalid(self, form):
+        print('FORM INVALID')
+        print(f'{form.errors}')
+        return super().form_invalid(form)
+
+
+    def form_valid(self, form):
+        '''Handle both Supplys & Items model together'''
+
+        print('FORM VALID')
+        print('Cleaned data - ',form.cleaned_data)
+
+        today = timezone.now().date()
+
+        # Form Data Input
+        item_input     = form.cleaned_data['items']
+        quantity_input = form.cleaned_data['quantity']
+
+        # If record Already exist, increment quantity
+        try:
+            supply_item           = Supplys.objects.get(entry_date=today, items=item_input)
+            supply_item.quantity += quantity_input
+            supply_item.save()
+
+        # Else created new record from fresh
+        except Supplys.DoesNotExist:
+            Supplys.objects.create(items=item_input, quantity=quantity_input)
+
+        # ITEMS MODEL - Decrease by supplied quantity
+        form.instance.items.quantity -= quantity_input
+        form.instance.items.save()
+
+        # Success message
+        msg = generate_msg(quantity_input, form.instance.items.name, 'supplied')
+        messages.info(self.request, msg, extra_tags='danger')
+
+        return HttpResponseRedirect( reverse('supply_create')+'#focus' )
 
 
 # URL - /supply/<str:entry_date>/
