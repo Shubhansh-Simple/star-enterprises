@@ -1,21 +1,24 @@
 # items/views.py
 
 # django
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.db.models     import Sum
+from django.urls          import reverse
 
 # local
 from .models import Items
 
+# URL - HOMEPAGE OF APPLICATION
 class CurrentStockListView(ListView):
-    '''Return the current stock of the canteen'''
+    '''Return the available stock of canteen to import/supply'''
 
     model               = Items
     template_name       = 'current-stock-list.html'
     context_object_name = 'current_stock_list'
 
+
     def get_queryset(self):
-        '''Will only shows active items in current stock'''
+        '''Will show only active items as current stock'''
 
         queryset = super().get_queryset()
         return queryset.filter(is_active=True)
@@ -32,9 +35,12 @@ class CurrentStockListView(ListView):
         return context
 
 
-# ITEMS CRUD OPERATIONS
+#################################
+# CANTEEN ITEMS CRUD OPERATIONS #
+#################################
 
-class ItemListView(ListView):
+# URL - /items/
+class ItemsListView(ListView):
     '''Return all the items of the canteen including non-active'''
 
     model               = Items
@@ -43,7 +49,7 @@ class ItemListView(ListView):
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        '''Add total items count including non-active items'''
+        '''Add total items including non-active items'''
 
         context = super().get_context_data(object_list=object_list, **kwargs)
         item    = self.get_queryset()
@@ -52,4 +58,27 @@ class ItemListView(ListView):
         return context
 
 
+# URL - /create/
+class ItemsCreateView(CreateView):
+    '''Add canteen items for import/supply'''
 
+    model         = Items
+    fields        = ['name','price','is_active']
+    template_name = 'item-create.html'
+
+
+    def form_invalid(self, form):
+        print('FORM INVALID')
+        print(f'{form.errors}')
+
+
+    def form_valid(self, form):
+        print('FORM VALID')
+        print(f'form data - {form.cleaned_data}')
+        return super().form_valid(form)
+
+
+# URL - /create/
+class ItemsUpdateView(UpdateView):
+    '''Update canteen items name, price & availability'''
+    pass

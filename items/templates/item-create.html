@@ -1,0 +1,43 @@
+<!--items/templates/item-create.html-->
+
+<!-- BASE TEMPLATE -->
+{% extends 'base-template.html' %}
+
+<!-- PAGE TITLE -->
+{% block title %}
+  Item Create
+{% endblock %}
+
+<!-- REMOVING NAVIGATION BUTTONS -->
+{% block body_upper %}
+{% endblock %}
+
+{% block body_lower %}
+
+  <!-----INCLUDE TABLE-HEADING TEMPLATE------->
+  {% with bg_color="dark" text_color="success" table_heading="Add Your Canteen Items" %}
+    {% include 'utils/table-heading.html' %}
+  {% endwith %}
+
+  <div class="container bg-light">
+    <hr>
+    <br>
+    <!------------ITEM CREATE FORM------------->
+    <form method="post">
+      {% csrf_token %}
+
+      <!--FORM FIELDS NAME - ITEM-NAME, ITEM-PRICE, ITEM-AVAILABILITY-->
+      {% include 'utils/canteen-item-form.html' %}
+
+      <!-- FORM SUBMIT BUTTON -->
+      <br>
+      <br>
+      <button type="submit" class="btn btn-success btn-md">
+        <b>Add To Canteen Items</b>
+      </button>
+      <br>
+    </form>
+    <hr>
+  </div>
+
+{% endblock %}

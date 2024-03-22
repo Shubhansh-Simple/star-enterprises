@@ -2,6 +2,7 @@
 
 # django
 from django.db              import models
+from django.urls            import reverse
 from django.utils           import timezone
 from django.core.validators import MinValueValidator
 
@@ -11,6 +12,7 @@ class Items(models.Model):
 
     name       = models.CharField('Item Name',
                                   max_length=70, 
+                                  default='',
                                   help_text='Enter your item\'s name')
 
     price      = models.PositiveSmallIntegerField('Item Price', 
@@ -21,9 +23,9 @@ class Items(models.Model):
                                                   default=0, 
                                                   help_text='Item\'s current quantity')
 
-    is_active  = models.BooleanField('Status of Item', 
+    is_active  = models.BooleanField('Item Availability', 
                                      default=True, 
-                                     help_text='Item\'s availability')
+                                     help_text='Click to change item\'s availability')
 
     created_at = models.DateTimeField(editable=False, 
                                       help_text='It will take todays date on it\'s itself')
@@ -62,8 +64,14 @@ class Items(models.Model):
             # Setting created_at and updated_at
             self.created_at, self.updated_at = current_time, current_time
 
-        self.name = self.name.title().strip()
+        # Ensuring Proper Item Name
+        self.name = self.name.strip().title()
+
         super().save(*args, **kwargs)
+
+
+    def get_absolute_url(self):
+        return reverse('item_list') + '#focus'
 
 
     def __str__(self):
