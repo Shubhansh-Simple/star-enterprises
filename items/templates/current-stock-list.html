@@ -33,8 +33,8 @@
         <!-- SHOW ALL ITEMS IN CURRENT STOCK LIST-->
         {% for item in current_stock_list %}
           <tr>
-            <td class="text-center">{{forloop.counter}}.</td>
-            <td class="text-center">{{item.name}}</td>
+            <th class="text-center">{{forloop.counter}}.)</th>
+            <td class="text-center"><mark>{{item.name}}</mark></td>
             <td class="text-center">{{item.quantity}}</td>
             <td class="text-center"><i>{{item.updated_at}}</i></td>
           </tr>  
