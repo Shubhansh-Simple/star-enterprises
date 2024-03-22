@@ -74,6 +74,8 @@ class Items(models.Model):
 
 
     def get_absolute_url(self):
+        '''Always redirect to listview of items'''
+
         return reverse('item_list') + '#focus'
 
 

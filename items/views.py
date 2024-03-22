@@ -78,22 +78,39 @@ class ItemsCreateView(CreateView):
 
 
     def form_valid(self, form):
-        '''Adding success message of form data is valid'''
+        '''Adding success message on form data is valid'''
         
         print('FORM VALID')
         print(f'form data - {form.cleaned_data}')
 
         # Success message
         msg = generate_msg( 0, form.cleaned_data['name'], 'added' )
-        messages.info(self.request, msg, extra_tags='success')
+        messages.info(self.request, msg, extra_tags='warning')
 
         return super().form_valid(form)
 
 
-# URL - /create/
+# URL - /update/
 class ItemsUpdateView(UpdateView):
-    '''Update canteen items name, price & availability'''
-    pass
+    '''Update canteen items fields - name, price & availability'''
+
+    model               = Items
+    fields              = ['name','price','is_active']
+    template_name       = 'item-update.html'
+    context_object_name = 'item_update'
+
+    def form_valid(self, form):
+        '''Adding update message on form data is valid'''
+
+        print('FORM VALID')
+        print(f'form data - {form.cleaned_data}')
+
+        # Success message
+        msg = generate_msg( 0, form.cleaned_data['name'], 'updated' )
+        messages.info(self.request, msg, extra_tags='warning' )
+
+        return super().form_valid(form)
+
 
 
 class ItemsDeleteView(DeleteView):

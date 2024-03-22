@@ -49,7 +49,7 @@
           <th class="text-center">Action</th>
         </tr>
 
-        <!-- SHOW ALL ITEMS IN CURRENT STOCK LIST-->
+        <!-- SHOW ALL CANTEEN ITEMS (INCLUDING NON-ACTIVE)-->
         {% for item in item_list %}
           <tr>
             <td class="text-center">{{forloop.counter}}.)</td>
@@ -60,7 +60,7 @@
             <td class="text-center text-secondary">{{item.quantity}}</td>
             <td class="text-center"><i>{{item.is_active}}</i></td>
             <td class="text-center">
-              <a href="{% url 'item_update' %}#focus" class="btn btn-sm btn-primary"> Edit </a>
+              <a href="{% url 'item_update' item.id %}#focus" class="btn btn-sm btn-primary"> Edit </a>
             </td>
           </tr>  
         {% endfor %}

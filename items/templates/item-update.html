@@ -1,11 +1,11 @@
-<!--items/templates/item-create.html-->
+<!--items/templates/item-update.html-->
 
 <!-- BASE TEMPLATE -->
 {% extends 'base-template.html' %}
 
 <!-- PAGE TITLE -->
 {% block title %}
-  Canteen Item Create
+  Canteen Item Update
 {% endblock %}
 
 <!-- REMOVING NAVIGATION BUTTONS -->
@@ -15,7 +15,7 @@
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="dark" text_color="success" table_heading="Add Your Canteen Items" %}
+  {% with bg_color="dark" text_color="warning" table_heading="Update Your Canteen Item" %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
@@ -33,7 +33,7 @@
       <br>
       <br>
       <button type="submit" class="btn btn-dark text-success btn-md">
-        <b>Add To Canteen Items</b>
+        <b>Update Canteen Item</b>
       </button>
       <br>
     </form>
