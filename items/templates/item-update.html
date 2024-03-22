@@ -38,6 +38,16 @@
       <br>
     </form>
     <hr>
+    <br>
+
+    <!-- DELETE IMPORT ENTRY SUBMIT BUTTON -->
+    <form method="post" action="{% url 'item_delete' pk=item_update.id %}#focus">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger btn-md w-50">
+        <b>Delete This Item</b>
+      </button>
+    </form>
+
   </div>
 
 {% endblock %}

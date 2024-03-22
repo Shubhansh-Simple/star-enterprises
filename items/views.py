@@ -1,9 +1,10 @@
 # items/views.py
 
 # django
+from django.http          import HttpResponseRedirect
 from django.urls          import reverse
 from django.contrib       import messages
-from django.db.models     import Sum
+from django.db.models     import ProtectedError, Sum
 from django.views.generic import DeleteView, ListView, CreateView, UpdateView
 
 # local
@@ -90,7 +91,7 @@ class ItemsCreateView(CreateView):
         return super().form_valid(form)
 
 
-# URL - /update/
+# URL - /update/<int:pk>/
 class ItemsUpdateView(UpdateView):
     '''Update canteen items fields - name, price & availability'''
 
@@ -113,6 +114,30 @@ class ItemsUpdateView(UpdateView):
 
 
 
+# URL - /delete/<int:pk>/
 class ItemsDeleteView(DeleteView):
-    '''Delete canteen items if not used in any table (models.PROTECT)'''
-    pass
+    '''Delete canteen items if not used by any table records (models.PROTECT)'''
+
+    model = Items
+
+    def form_valid(self, form):
+        '''Delete the item if no dependency of item found, otherwise show cannot delete msg'''
+
+        item = self.get_object()
+
+        # Try to delete the item
+        try:
+            item.delete()
+            msg   = generate_msg(0, item.name, 'removed')
+            color = 'dark'
+
+        # dependency found
+        except ProtectedError:
+            msg   = f'{item.name} cannot be deleted! ( Used in other entries)'
+            color = 'danger'
+
+        # Success message
+        messages.info(self.request, msg, extra_tags=color)
+
+        return HttpResponseRedirect( reverse('item_list') + '#focus' )
+
