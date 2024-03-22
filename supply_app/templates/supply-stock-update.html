@@ -1,18 +1,18 @@
-<!-- import_app/templates/import-stock-update.html -- -->
+<!-- supply_app/templates/supply-stock-update.html -- -->
 
 <!-- BASE TEMPLATE -->
 {% extends 'base-template.html' %}
 
 <!-- PAGE TITLE -->
 {% block title %}
-  Import Stock Update
+  Supply Stock Update
 {% endblock %}
 
 
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="dark" text_color="warning" table_heading="Update Imported Stock" table_sub_heading=import_stock_update.import_date %}
+  {% with bg_color="dark" text_color="warning" table_heading="Update Supplied Stock" table_sub_heading=supply_stock_update.entry_date %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
@@ -30,7 +30,7 @@
   {% endif %}
 
   <!--SUPPLY RECORDS EXIST-->
-  {% if import_stock_update %}
+  {% if supply_stock_update %}
 
     <div class="container bg-light">
       <hr>
@@ -47,15 +47,15 @@
         <br>
         <br>
 
-        <!-- UPDATE IMPORT ENTRY SUBMIT BUTTON -->
+        <!-- UPDATE SUPPLY ENTRY SUBMIT BUTTON -->
         <button type="submit" class="btn btn-dark text-warning btn-md">
           <b>Update Entry</b>
         </button>
 
         &nbsp; &nbsp; &nbsp;
 
-        <!-- BACK BUTTON TO IMPORT ENTRY LIST -->
-        <a class="btn btn-primary btn-md" href="{% url 'import_detail' import_stock_update.import_date %}#focus">
+        <!-- BACK BUTTON TO SUPPLY ENTRY LIST -->
+        <a class="btn btn-primary btn-md" href="{% url 'supply_detail' supply_stock_update.entry_date %}#focus">
           <b>Back To Entries</b>
         </a>
 
@@ -64,8 +64,8 @@
       <hr>
       <br>
       <br>
-      <!-- DELETE IMPORT ENTRY SUBMIT BUTTON -->
-      <form method="post" action="{% url 'import_delete' pk=import_stock_update.id %}#focus">
+      <!-- DELETE SUPPLY ENTRY SUBMIT BUTTON -->
+      <form method="post" action="{% url 'supply_delete' pk=supply_stock_update.id %}#focus">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-md w-50">
           <b>Delete This Entry</b>
@@ -77,7 +77,7 @@
   {% else %}
 
     <!-----INCLUDE NOT FOUND MSG TEMPLATE------->
-    {% with not_found_msg="No Import Entry Found" %}
+    {% with not_found_msg="No Supply Entry Found" %}
       {% include 'utils/item-not-found.html' %}
     {% endwith %}
 

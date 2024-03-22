@@ -1,7 +1,7 @@
 # supply_app/views.py
 
 # django
-from django.urls          import reverse
+from django.urls          import reverse, reverse_lazy
 from django.http          import Http404, HttpResponseRedirect
 from django.utils         import timezone
 from django.contrib       import messages
@@ -126,6 +126,39 @@ class SupplyStockUpdateView(UpdateView):
 
 # URL - /supply/<int:pk>/delete/
 class SupplyStockDeleteView(DeleteView):
-    '''Allow owner (only) to delete the today's entry'''
+    '''
+    Handle Items models as well with Supplys model
+    Only active items allow to be deleted
+    '''
+    model = Supplys
 
-    model       = Supplys
+    def get_success_url(self):
+        '''Redirect to Supply DetailPage after successfull deletion'''
+
+        return reverse_lazy('supply_detail', kwargs={'entry_date' : self.object.entry_date}) + '#focus'
+
+
+    def form_valid(self, form):
+        '''Handle the Items models as well with Supplys model'''
+            
+        supply_item = self.get_object()
+
+        # Allow delete only when supplied item is active
+        if supply_item.items.is_active:
+
+            # ITEMS MODEL - Increase total quantity
+            supply_item.items.quantity += supply_item.quantity
+            supply_item.items.save()
+
+            # Success message
+            msg = generate_msg(supply_item.quantity, supply_item.items.name, 'removed')
+            messages.info(self.request, msg, extra_tags='dark')
+
+            return super().form_valid(form)
+        
+        # Fail message
+        msg = supply_item.items.name + ' is not active, cannot be deleted!'
+        messages.info(self.request, msg, extra_tags='danger')
+
+        return HttpResponseRedirect( reverse('supply_detail', kwargs={'entry_date' : supply_item.entry_date}) + '#focus' )
+
