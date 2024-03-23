@@ -15,6 +15,7 @@ from utils.custom_validators import validate_entry_date
 from utils.custom_messages   import generate_msg
 
 
+
 # URL - /import/
 class ImportStockListView(ListView):
     '''Shows the import dates list in which stock added'''
@@ -28,6 +29,7 @@ class ImportStockListView(ListView):
 
         queryset = Imports.objects.values_list('entry_date',flat=True).distinct()
         return queryset
+
 
 
 # URL - /import/create/
@@ -56,6 +58,7 @@ class ImportStockCreateView(CreateView):
         item_input     = form.cleaned_data['items']
         quantity_input = form.cleaned_data['quantity']
 
+        #            [ IMPORTS MODEL ]
         # Already exist
         try:
             import_item           = Imports.objects.get(entry_date=today, items=item_input)
@@ -66,7 +69,8 @@ class ImportStockCreateView(CreateView):
         except Imports.DoesNotExist:
             Imports.objects.create(items=item_input, quantity=quantity_input)
 
-        # ITEMS MODEL - Increased by imported quantity
+        #            [ ITEMS MODEL ] 
+        # Increased by imported quantity
         form.instance.items.quantity += quantity_input
         form.instance.items.save()
 
@@ -75,6 +79,7 @@ class ImportStockCreateView(CreateView):
         messages.info(self.request, msg, extra_tags='success')
 
         return HttpResponseRedirect( reverse('import_create')+'#focus' )
+
 
 
 # URL - /import/<str:entry_date>/
@@ -113,9 +118,10 @@ class ImportStockDetailView(DetailView):
         return context
 
 
+
 # URL - /import/<int:pk>/update/
 class ImportStockUpdateView(UpdateView):
-    '''Allow owner (only) to update the today's entry'''
+    '''Allow user to update the today's entry'''
 
     model               = Imports
     form_class          = ImportUpdateForm
@@ -124,7 +130,7 @@ class ImportStockUpdateView(UpdateView):
 
 
     def get_form_kwargs(self):
-        '''Adding default choice in imported Items widget'''
+        '''Adding initial unmodifiedable choice of items in Select widget'''
 
         kwargs            = super().get_form_kwargs()
         kwargs['initial'] = {'items' : str(self.get_object().items) }
@@ -173,7 +179,8 @@ class ImportStockUpdateView(UpdateView):
 class ImportStockDeleteView(DeleteView):
     '''Allow owner (only) to delete the today's entry'''
 
-    model       = Imports
+    model = Imports
+
 
     def get_success_url(self):
         '''Redirect to Import DetailPage after successfull deletion'''
