@@ -192,7 +192,7 @@ class ImportStockDeleteView(DeleteView):
 
         import_item = self.get_object()
 
-        # Allow delete only when imported item is active
+        # Only active items can be deleted
         if import_item.items.is_active:
 
             # ITEMS MODEL - Decrease total quantity
