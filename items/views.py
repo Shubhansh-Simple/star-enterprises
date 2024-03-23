@@ -2,7 +2,6 @@
 
 # django
 from django.http          import HttpResponseRedirect
-from django.urls          import reverse
 from django.contrib       import messages
 from django.db.models     import ProtectedError, Sum
 from django.views.generic import DeleteView, ListView, CreateView, UpdateView
@@ -143,4 +142,4 @@ class ItemsDeleteView(DeleteView):
         # Success message
         messages.info(self.request, msg, extra_tags=color)
 
-        return HttpResponseRedirect( reverse('item_list') + '#focus' )
+        return HttpResponseRedirect( item.get_absolute_url() )
