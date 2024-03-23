@@ -16,6 +16,7 @@ from utils.custom_validators import validate_entry_date
 from utils.custom_messages   import generate_msg
 
 
+
 # URL - /supply/
 class SupplyStockListView(ListView):
     '''Shows the supply dates list in which stock supplied'''
@@ -31,6 +32,7 @@ class SupplyStockListView(ListView):
         return queryset
 
 
+
 # URL - /supply/create/
 class SupplyStockCreateView(CreateView):
     '''Allow users to supply stock from current stock'''
@@ -38,7 +40,6 @@ class SupplyStockCreateView(CreateView):
     model         = Supplys
     form_class    = SupplyCreateForm
     template_name = 'supply-stock-create.html'
-
 
     def form_invalid(self, form):
         print('FORM INVALID')
@@ -58,17 +59,19 @@ class SupplyStockCreateView(CreateView):
         item_input     = form.cleaned_data['items']
         quantity_input = form.cleaned_data['quantity']
 
-        # If record Already exist, increment quantity
+        #            [ SUPPLYS MODEL ]
+        # Already exist
         try:
             supply_item           = Supplys.objects.get(entry_date=today, items=item_input)
             supply_item.quantity += quantity_input
             supply_item.save()
 
-        # Else created new record from fresh
+        # Newly created
         except Supplys.DoesNotExist:
             Supplys.objects.create(items=item_input, quantity=quantity_input)
 
-        # ITEMS MODEL - Decrease by supplied quantity
+        #            [ ITEMS MODEL ]
+        # Decreased by supplied quantity
         form.instance.items.quantity -= quantity_input
         form.instance.items.save()
 
@@ -77,6 +80,7 @@ class SupplyStockCreateView(CreateView):
         messages.info(self.request, msg, extra_tags='danger')
 
         return HttpResponseRedirect( reverse('supply_create')+'#focus' )
+
 
 
 # URL - /supply/<str:entry_date>/
@@ -99,6 +103,7 @@ class SupplyStockDetailView(DetailView):
             return obj_supply
         raise Http404
 
+
     def get_context_data(self, **kwargs):
         '''Adding Entry-date and total-supply-quantity'''
 
@@ -114,9 +119,10 @@ class SupplyStockDetailView(DetailView):
         return context
 
 
+
 # URL - /supply/<int:pk>/update/
 class SupplyStockUpdateView(UpdateView):
-    '''Allow owner (only) to update the today's entry'''
+    '''Allow user to update the today's entry'''
 
     model               = Supplys
     form_class          = SupplyUpdateForm
@@ -127,15 +133,13 @@ class SupplyStockUpdateView(UpdateView):
 # URL - /supply/<int:pk>/delete/
 class SupplyStockDeleteView(DeleteView):
     '''
-    Handle Items models as well with Supplys model
+    Handle Items model as well with Supplys model
     Only active items allow to be deleted
     '''
     model = Supplys
 
     def get_success_url(self):
-        '''Redirect to Supply DetailPage after successfull deletion'''
-
-        return reverse_lazy('supply_detail', kwargs={'entry_date' : self.object.entry_date}) + '#focus'
+        return self.object.get_absolute_url()
 
 
     def form_valid(self, form):
@@ -143,7 +147,7 @@ class SupplyStockDeleteView(DeleteView):
             
         supply_item = self.get_object()
 
-        # Allow delete only when supplied item is active
+        # Only active items can be deleted
         if supply_item.items.is_active:
 
             # ITEMS MODEL - Increase total quantity
@@ -156,9 +160,9 @@ class SupplyStockDeleteView(DeleteView):
 
             return super().form_valid(form)
         
-        # Fail message
+        # Redirect with Fail message
         msg = supply_item.items.name + ' is not active, cannot be deleted!'
         messages.info(self.request, msg, extra_tags='danger')
 
-        return HttpResponseRedirect( reverse('supply_detail', kwargs={'entry_date' : supply_item.entry_date}) + '#focus' )
+        return HttpResponseRedirect( supply_item.get_absolute_url() )
 
