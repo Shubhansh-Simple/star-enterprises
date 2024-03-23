@@ -12,9 +12,10 @@ from .models               import Items
 from utils.custom_messages import generate_msg
 
 
+
 # URL - HOMEPAGE OF APPLICATION
 class CurrentStockListView(ListView):
-    '''Return the available stock of canteen to import/supply'''
+    '''Return the available stock of canteen for import/supply'''
 
     model               = Items
     template_name       = 'current-stock-list.html'
@@ -39,13 +40,14 @@ class CurrentStockListView(ListView):
         return context
 
 
+
 #################################
 # CANTEEN ITEMS CRUD OPERATIONS #
 #################################
 
 # URL - /items/
 class ItemsListView(ListView):
-    '''Return all the items of the canteen including non-active'''
+    '''Return all the items of the canteen including non-active ones'''
 
     model               = Items
     template_name       = 'item-list.html'
@@ -60,6 +62,7 @@ class ItemsListView(ListView):
 
         context['total_items']  = item.count()
         return context
+
 
 
 # URL - /create/
@@ -89,6 +92,7 @@ class ItemsCreateView(CreateView):
         messages.info(self.request, msg, extra_tags='warning')
 
         return super().form_valid(form)
+
 
 
 # URL - /update/<int:pk>/
@@ -133,11 +137,10 @@ class ItemsDeleteView(DeleteView):
 
         # dependency found
         except ProtectedError:
-            msg   = f'{item.name} cannot be deleted! ( Used in other entries)'
+            msg   = f'{item.name} cannot be deleted! ( Used by other entries)'
             color = 'danger'
 
         # Success message
         messages.info(self.request, msg, extra_tags=color)
 
         return HttpResponseRedirect( reverse('item_list') + '#focus' )
-
