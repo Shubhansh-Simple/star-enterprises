@@ -2,7 +2,7 @@
 
 # django
 from django.http          import Http404, HttpResponseRedirect
-from django.urls          import reverse, reverse_lazy
+from django.urls          import reverse 
 from django.utils         import timezone
 from django.contrib       import messages
 from django.db.models     import Sum
@@ -78,7 +78,7 @@ class ImportStockCreateView(CreateView):
         msg = generate_msg(quantity_input, form.instance.items.name, 'added')
         messages.info(self.request, msg, extra_tags='success')
 
-        return HttpResponseRedirect( reverse('import_create')+'#focus' )
+        return HttpResponseRedirect( reverse('import_create') + '#focus' )
 
 
 
@@ -134,6 +134,7 @@ class ImportStockUpdateView(UpdateView):
 
         kwargs            = super().get_form_kwargs()
         kwargs['initial'] = {'items' : str(self.get_object().items) }
+        #print('IMPORT UPDATE KWARGS - ',kwargs)
         return kwargs
 
 
@@ -144,25 +145,25 @@ class ImportStockUpdateView(UpdateView):
         print('Cleaned data - ',form.cleaned_data)
 
         import_item            = self.get_object()
-        old_stock_quantity     = import_item.quantity
+
+        current_stock_quantity = import_item.quantity
         updated_stock_quantity = form.cleaned_data['quantity']
 
         # CHANGE IN IMPORT-QUANTITY
-        if old_stock_quantity != updated_stock_quantity:
+        if current_stock_quantity != updated_stock_quantity:
 
-            difference = abs(old_stock_quantity - updated_stock_quantity)
+            difference = abs(current_stock_quantity - updated_stock_quantity)
 
             # Updating import-quantity
             import_item.quantity = updated_stock_quantity
             import_item.save()
 
-            # Updating total-quantity
-
-            # INCREMENT OF IMPORT-STOCK
-            if old_stock_quantity < updated_stock_quantity:
+            #           [ITEMS MODEL]
+            # Increased by IMPORT-STOCK
+            if current_stock_quantity < updated_stock_quantity:
                 import_item.items.quantity += difference
 
-            # DECREMENT OF IMPORT-STOCK
+            # Decreased by IMPORT-STOCK
             else:
                 import_item.items.quantity -= difference
 
@@ -172,7 +173,8 @@ class ImportStockUpdateView(UpdateView):
         msg = generate_msg(updated_stock_quantity, import_item.items.name, 'updated')
         messages.info(self.request, msg, extra_tags='success')
 
-        return HttpResponseRedirect( reverse('import_detail', kwargs={'entry_date' : import_item.entry_date}) + '#focus' )
+        return HttpResponseRedirect( import_item.get_absolute_url() )
+
 
 
 # URL - /import/<int:pk>/delete/
@@ -181,24 +183,31 @@ class ImportStockDeleteView(DeleteView):
 
     model = Imports
 
-
     def get_success_url(self):
-        '''Redirect to Import DetailPage after successfull deletion'''
-
-        return reverse_lazy('import_detail', kwargs={'entry_date' : self.object.entry_date}) + '#focus'
+        return self.object.get_absolute_url()
 
 
     def form_valid(self, form):
         '''Handle the Items models as well with Imports model'''
 
-        # ITEMS MODEL - Decrease total quantity
-        import_item                 = self.get_object()
-        import_item.items.quantity -= import_item.quantity
-        import_item.items.save()
+        import_item = self.get_object()
 
-        # Success message
-        msg = generate_msg(import_item.quantity, import_item.items.name, 'removed')
-        messages.info(self.request, msg, extra_tags='dark')
+        # Allow delete only when imported item is active
+        if import_item.items.is_active:
 
-        return super().form_valid(form)
+            # ITEMS MODEL - Decrease total quantity
+            import_item.items.quantity -= import_item.quantity
+            import_item.items.save()
+
+            # Success message
+            msg = generate_msg(import_item.quantity, import_item.items.name, 'removed')
+            messages.info(self.request, msg, extra_tags='dark')
+
+            return super().form_valid(form)
+
+        # Redirect with Fail message
+        msg = import_item.items.name + ' is not active, cannot be deleted!'
+        messages.info(self.request, msg, extra_tags='danger')
+
+        return HttpResponseRedirect( import_item.get_absolute_url() )
 
