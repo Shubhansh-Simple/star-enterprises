@@ -67,9 +67,6 @@ class Items(models.Model):
             # Setting created_at and updated_at
             self.created_at, self.updated_at = current_time, current_time
 
-        # Ensuring Proper Item Name
-        self.name = self.name.title()
-
         super().save(*args, **kwargs)
 
 

@@ -8,6 +8,7 @@ from django.views.generic import DeleteView, ListView, CreateView, UpdateView
 
 # local
 from .models               import Items
+from .forms                import ItemForm
 from utils.custom_messages import generate_msg
 
 
@@ -69,7 +70,7 @@ class ItemsCreateView(CreateView):
     '''Add canteen items for import/supply'''
 
     model         = Items
-    fields        = ['name','price','is_active']
+    form_class    = ItemForm
     template_name = 'item-create.html'
 
 
@@ -99,7 +100,7 @@ class ItemsUpdateView(UpdateView):
     '''Update canteen items fields - name, price & availability'''
 
     model               = Items
-    fields              = ['name','price','is_active']
+    form_class          = ItemForm
     template_name       = 'item-update.html'
     context_object_name = 'item_update'
 
