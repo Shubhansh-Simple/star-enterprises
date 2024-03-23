@@ -33,19 +33,9 @@ class Supplys(models.Model):
 
 
     def get_absolute_url(self):
-        '''Redirect the user after creation and updation of items'''
+        '''Redirect the user after deletion and updation of items'''
 
-        print("GET ABSOLUTE URL")
-
-        # UPDATE
-        if self.pk:
-            print('UPDATE')
-            return reverse('supply_detail', kwargs={'entry_date' : self.entry_date}) + '#focus'
-
-        # CREATE
-        else:
-            print('CREATE')
-            return reverse('supply_create') + '#focus'
+        return reverse('supply_detail', kwargs={'entry_date' : self.entry_date}) + '#focus'
 
 
     def __str__(self):
