@@ -130,6 +130,58 @@ class SupplyStockUpdateView(UpdateView):
     context_object_name = 'supply_stock_update'
 
 
+    def get_form_kwargs(self):
+        '''Adding initial unmodifiedable choice of items in Select widget'''
+
+        kwargs            = super().get_form_kwargs()
+        kwargs['initial'] = {'items' : str(self.get_object().items)}
+        #print('SUPPLY UPDATE KWARGS - ',kwargs)
+        return kwargs
+
+
+    def form_valid(self, form):
+        '''
+        Handle Items model as well with Supply model
+        Only active items allow to be updated
+        '''
+
+        print('UPDATE FORM VALID')
+        print('Cleaned data - ',form.cleaned_data)
+
+        supply_item            = self.get_object()
+
+        # Only active items can be updated
+        if supply_item.items.is_active:
+
+            current_stock_quantity = supply_item.quantity
+            updated_stock_quantity = form.cleaned_data['quantity']
+
+            # CHANGE IN SUPPLY-QUANTITY
+            if current_stock_quantity != updated_stock_quantity:
+
+                difference = current_stock_quantity - updated_stock_quantity
+
+                #           [SUPPLY MODEL]
+                # Updating supply-quantity
+                supply_item.quantity = updated_stock_quantity
+                supply_item.save()
+
+                #           [ITEMS MODEL]
+                supply_item.items.quantity += difference
+                supply_item.items.save()
+
+            # Success message
+            msg = generate_msg( updated_stock_quantity, supply_item.items.name, 'updated' )
+
+        else:
+            # Fail message
+            msg = supply_item.items.name + ' is not active, cannot be updated!'
+
+        messages.info(self.request, msg, extra_tags='danger' )
+        return HttpResponseRedirect( supply_item.get_absolute_url() )
+
+
+
 # URL - /supply/<int:pk>/delete/
 class SupplyStockDeleteView(DeleteView):
     '''

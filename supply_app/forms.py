@@ -4,7 +4,7 @@
 from django import forms
 
 # local
-from .models         import Supplys
+from .models      import Supplys
 from items.models import Items
 
 
@@ -63,3 +63,31 @@ class SupplyUpdateForm(forms.ModelForm):
         # Items selection cannot be changed ( Update View )
         self.fields['items'].required                 = False
         self.fields['items'].widget.attrs['disabled'] = True
+
+
+    def clean_quantity(self):
+        '''Quantity should be greater than 0 and less than equal to current stock quantity'''
+
+        print("CLEANED DATA - ",self.cleaned_data)
+
+        quantity_input = self.cleaned_data.get('quantity')
+
+        # Quantity should be positive number
+        if quantity_input < 1:
+            raise forms.ValidationError('Quantity must be a positive value')
+
+        '''
+        item_input = self.cleaned_data.get('items')
+
+        # Items does not exist in our model
+        if not item_input:
+            raise forms.ValidationError(f'Enter a valid available choice')
+
+        # Supplied quantity should be lesser than equal to current quantity
+        if quantity_input > item_input.quantity:
+            raise forms.ValidationError(f'We have only {item_input.quantity} box left')
+        '''
+
+        return quantity_input
+
+
