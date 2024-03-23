@@ -146,41 +146,44 @@ class ImportStockUpdateView(UpdateView):
 
         import_item            = self.get_object()
 
-        current_stock_quantity = import_item.quantity
-        updated_stock_quantity = form.cleaned_data['quantity']
+        # Only active items can be updated
+        if import_item.items.is_active:
 
-        # CHANGE IN IMPORT-QUANTITY
-        if current_stock_quantity != updated_stock_quantity:
+            current_stock_quantity = import_item.quantity
+            updated_stock_quantity = form.cleaned_data['quantity']
 
-            difference = abs(current_stock_quantity - updated_stock_quantity)
+            # CHANGE IN IMPORT-QUANTITY
+            if current_stock_quantity != updated_stock_quantity:
 
-            # Updating import-quantity
-            import_item.quantity = updated_stock_quantity
-            import_item.save()
+                difference = current_stock_quantity - updated_stock_quantity
 
-            #           [ITEMS MODEL]
-            # Increased by IMPORT-STOCK
-            if current_stock_quantity < updated_stock_quantity:
-                import_item.items.quantity += difference
+                #           [IMPORTS MODEL]
+                # Updating import-quantity
+                import_item.quantity = updated_stock_quantity
+                import_item.save()
 
-            # Decreased by IMPORT-STOCK
-            else:
+                #           [ITEMS MODEL]
                 import_item.items.quantity -= difference
+                import_item.items.save()
 
-            import_item.items.save()
+            # Success message
+            msg = generate_msg(updated_stock_quantity, import_item.items.name, 'updated')
 
-        # Success message
-        msg = generate_msg(updated_stock_quantity, import_item.items.name, 'updated')
+        else:
+            # Fail message
+            msg = import_item.items.name + ' is not active, cannot be updated!'
+
         messages.info(self.request, msg, extra_tags='success')
-
         return HttpResponseRedirect( import_item.get_absolute_url() )
 
 
 
 # URL - /import/<int:pk>/delete/
 class ImportStockDeleteView(DeleteView):
-    '''Allow owner (only) to delete the today's entry'''
-
+    '''
+    Handle Items model as well with Imports model
+    Only active items allow to be deleted
+    '''
     model = Imports
 
     def get_success_url(self):
