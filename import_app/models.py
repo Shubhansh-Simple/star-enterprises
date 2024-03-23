@@ -35,7 +35,7 @@ class Imports(models.Model):
 
 
     def get_absolute_url(self):
-        '''Redirect the after deletion & updation of items'''
+        '''Redirect the user after deletion & updation of items'''
 
         return reverse('import_detail', kwargs={'entry_date' : self.entry_date}) + '#focus'
 
