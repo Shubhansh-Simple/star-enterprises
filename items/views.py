@@ -138,12 +138,12 @@ class ItemsDeleteView(DeleteView):
         try:
             item.delete()
             msg   = generate_msg(0, item.name, 'removed')
-            color = 'dark'
+            color = 'warning'
 
         # dependency found
         except ProtectedError:
             msg   = f'{item.name} cannot be deleted! ( Used by other entries)'
-            color = 'danger'
+            color = 'dark'
 
         # Success message
         messages.info(self.request, msg, extra_tags=color)

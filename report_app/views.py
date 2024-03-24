@@ -10,6 +10,7 @@ from .models                 import Reports
 from utils.custom_validators import validate_entry_date
 
 
+
 # URL - /report/
 class DailyReportListView(ListView):
     '''Shows the report dates list in which stock imported/exported'''
@@ -23,6 +24,7 @@ class DailyReportListView(ListView):
 
         queryset =  Reports.objects.values_list('entry_date',flat=True).distinct()
         return queryset
+
 
 
 # URL - /report/<str:entry_date>/
