@@ -17,11 +17,11 @@ class Reports(models.Model):
                                   )
 
     # Allow negative values as well
-    old_balance   = models.SmallIntegerField()
-    arrival_stock = models.SmallIntegerField()
-    total_stock   = models.SmallIntegerField()
-    balance_stock = models.SmallIntegerField()
-    sold_stock    = models.SmallIntegerField()
+    old_balance   = models.SmallIntegerField( default=0 )
+    arrival_stock = models.SmallIntegerField( default=0 )
+    total_stock   = models.SmallIntegerField( default=0 )
+    balance_stock = models.SmallIntegerField( default=0 )
+    sold_stock    = models.SmallIntegerField( default=0 )
 
     entry_date = models.DateField(auto_now_add=True, help_text='It will take todays date on it\'s own')
 
