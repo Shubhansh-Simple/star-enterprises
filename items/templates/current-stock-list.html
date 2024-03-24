@@ -40,6 +40,8 @@
               <small><i>
                 {% if item.updated_at.date == today.date %}
                   {{item.updated_at|time:"h:i A"}}
+                {% elif item.updated_at.date == yesterday.date %}
+                  Yesterday
                 {% else %}
                   {{item.updated_at|date:"F d, Y"}}
                 {% endif %}

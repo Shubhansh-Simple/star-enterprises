@@ -7,6 +7,9 @@ from django.contrib       import messages
 from django.db.models     import ProtectedError, Sum
 from django.views.generic import DeleteView, ListView, CreateView, UpdateView
 
+# python
+from datetime import timedelta
+
 # local
 from .models               import Items
 from .forms                import ItemForm
@@ -36,8 +39,9 @@ class CurrentStockListView(ListView):
         context       = super().get_context_data(object_list=object_list, **kwargs)
         current_stock = self.get_queryset()
 
-        # today's date
-        context['today'] = timezone.now()
+        # today's & yesterday's date
+        context['today']     = timezone.now()
+        context['yesterday'] = timezone.now() - timedelta(days=1)
 
         # Count of all boxes
         context['total_quantity'] = current_stock.aggregate(totalling=Sum('quantity'))['totalling']
