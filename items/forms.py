@@ -27,4 +27,3 @@ class ItemForm(forms.ModelForm):
         name_input = name_input.title()
 
         return name_input
-

@@ -11,18 +11,19 @@ class Items(models.Model):
     '''Canteen Item Model'''
 
     name       = models.CharField('Item Name',
-                                  max_length=50, 
+                                  max_length=50,
                                   default='',
                                   validators=[MinLengthValidator(5)],
                                   help_text='Enter your item\'s name')
 
-    price      = models.PositiveSmallIntegerField('Item Price', 
-                                                  validators=[MinValueValidator(5)], 
+    price      = models.PositiveSmallIntegerField('Item Price',
+                                                  validators=[MinValueValidator(5)],
                                                   help_text='Enter your item\'s price')
 
-    quantity   = models.PositiveSmallIntegerField('Total quantity of Item', 
-                                                  default=0, 
-                                                  help_text='Item\'s current quantity')
+    # allow negative values
+    quantity   = models.SmallIntegerField('Total quantity of Item',
+                                          default=0,
+                                          help_text='Item\'s current quantity')
 
     is_active  = models.BooleanField('Item Availability', 
                                      default=True, 
