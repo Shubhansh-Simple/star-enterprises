@@ -16,10 +16,16 @@ class Reports(models.Model):
                                    help_text='Please choose a item to generate report'
                                   )
 
-    # Allow negative values as well
-    old_balance   = models.SmallIntegerField( default=0 )
+    # NOTE : Negative values are also allow here
+
+    # Last table balance stock
+    old_stock     = models.SmallIntegerField( default=0 )
+
+    # Import Stock
     arrival_stock = models.SmallIntegerField( default=0 )
     total_stock   = models.SmallIntegerField( default=0 )
+
+    # Supply Stock
     balance_stock = models.SmallIntegerField( default=0 )
     sold_stock    = models.SmallIntegerField( default=0 )
 
@@ -35,6 +41,17 @@ class Reports(models.Model):
         unique_together     = ['items','entry_date']      # will raise IntegrityError
 
 
+    def save(self, *args, **kwargs):
+        '''Handle total_stock & balance_stock on each saving'''
+
+        # total_stock   = old_stock   + arrival_stock
+        # balance_stock = total_stock - sold_stock      // tomorrow's old_stock
+
+        self.total_stock   = self.old_stock   + self.arrival_stock
+        self.balance_stock = self.total_stock - self.sold_stock
+
+        super().save(*args, **kwargs)
+
+
     def __str__(self):
         return f'Report - {self.entry_date} - {self.items.name}'
-
