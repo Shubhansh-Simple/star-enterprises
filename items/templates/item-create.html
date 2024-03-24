@@ -15,7 +15,7 @@
 {% block body_lower %}
 
   <!-----INCLUDE TABLE-HEADING TEMPLATE------->
-  {% with bg_color="dark" text_color="success" table_heading="Add Your Canteen Items" %}
+  {% with bg_color="warning" text_color="dark" table_heading="Add Your Canteen Items" %}
     {% include 'utils/table-heading.html' %}
   {% endwith %}
 
@@ -32,8 +32,8 @@
       <!-- FORM SUBMIT BUTTON -->
       <br>
       <br>
-      <button type="submit" class="btn btn-dark text-success btn-md">
-        <b>Add To Canteen Items</b>
+      <button type="submit" class="btn btn-warning text-dark btn-md">
+        <b>Add Items</b>
       </button>
       <br>
     </form>
