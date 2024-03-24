@@ -2,7 +2,7 @@
 
 # django
 from django.http          import Http404
-from django.shortcuts     import get_object_or_404
+from django.db.models     import Sum
 from django.views.generic import ListView, DetailView
 
 # local
@@ -35,6 +35,7 @@ class DailyReportDetailView(DetailView):
     template_name       = 'daily-report-detail.html'
     context_object_name = 'daily_report_detail'
 
+
     def get_object(self, queryset=None):
         '''Return report details of provided dates'''
 
@@ -46,6 +47,7 @@ class DailyReportDetailView(DetailView):
             return obj_report
         raise Http404
 
+
     def get_context_data(self, **kwargs):
         '''Adding Entry-date'''
 
@@ -53,6 +55,10 @@ class DailyReportDetailView(DetailView):
         report  = self.get_object()
 
         # Entry date
-        context['entry_date'] = report[0].entry_date if report else self.kwargs['entry_date']
+        context['entry_date']   = report[0].entry_date if report else self.kwargs['entry_date']
+
+        # Count of all supplied boxes
+        context['total_imported_quantity'] = report.aggregate(totalling=Sum('arrival_stock'))['totalling']
+        context['total_supplied_quantity'] = report.aggregate(totalling=Sum('sold_stock'))['totalling']
 
         return context
