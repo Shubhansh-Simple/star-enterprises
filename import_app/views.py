@@ -12,6 +12,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 # local
 from .models                 import Imports
 from .forms                  import ImportCreateForm, ImportUpdateForm
+from report_app.models       import Reports
 from utils.custom_validators import validate_entry_date
 from utils.custom_messages   import generate_msg
 
@@ -49,11 +50,12 @@ class ImportStockCreateView(CreateView):
 
     @transaction.atomic
     def form_valid(self, form):
-        '''Handle already exist data and Import Model as well'''
+        '''Handle Reports, Items & Imports model together'''
 
         print('FORM VALID')
         print('Cleaned data - ',form.cleaned_data)
 
+        # today's date
         today = timezone.now().date()
 
         # Form Data Input
@@ -70,6 +72,20 @@ class ImportStockCreateView(CreateView):
         # Newly created
         except Imports.DoesNotExist:
             Imports.objects.create(items=item_input, quantity=quantity_input)
+
+        #            [ REPORTS MODEL ]
+        # Already exist
+        try:
+            report_item                = Reports.objects.get(entry_date=today, items=item_input)
+            report_item.arrival_stock += quantity_input
+
+        # Newly created
+        except Reports.DoesNotExist:
+            report_item               = Reports.objects.create(entry_date=today, items=item_input)
+            report_item.old_stock     = form.instance.items.quantity
+            report_item.arrival_stock = quantity_input
+
+        report_item.save()
 
         #            [ ITEMS MODEL ] 
         # Increased by imported quantity
