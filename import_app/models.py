@@ -1,9 +1,8 @@
 # import_app/models.py
 
 # django
-from django.db              import models
-from django.urls            import reverse
-from django.core.validators import MinValueValidator
+from django.db   import models
+from django.urls import reverse
 
 # local
 from items.models import Items
@@ -18,9 +17,8 @@ class Imports(models.Model):
                                    help_text='Please choose a item to import',
                                    limit_choices_to={'is_active':True})
 
-    quantity   = models.PositiveSmallIntegerField('Import Quantity',
-                                                validators=[MinValueValidator(1)],
-                                                help_text='Please enter your imported quantity here')
+    # allow negative values
+    quantity   = models.SmallIntegerField('Import Quantity', help_text='Please enter your imported quantity here')
 
     entry_date = models.DateField(auto_now_add=True, help_text='It will take todays date on it\'s own')
 
