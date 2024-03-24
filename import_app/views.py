@@ -144,7 +144,8 @@ class ImportStockUpdateView(UpdateView):
         print('UPDATE FORM VALID')
         print('Cleaned data - ',form.cleaned_data)
 
-        import_item            = self.get_object()
+        import_item = self.get_object()
+        print('import_item - ',import_item)
 
         # Only active items can be updated
         if import_item.items.is_active:
@@ -213,4 +214,3 @@ class ImportStockDeleteView(DeleteView):
         messages.info(self.request, msg, extra_tags='danger')
 
         return HttpResponseRedirect( import_item.get_absolute_url() )
-

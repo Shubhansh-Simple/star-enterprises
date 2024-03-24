@@ -217,4 +217,3 @@ class SupplyStockDeleteView(DeleteView):
         messages.info(self.request, msg, extra_tags='danger')
 
         return HttpResponseRedirect( supply_item.get_absolute_url() )
-

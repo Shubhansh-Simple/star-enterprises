@@ -11,7 +11,6 @@ from items.models import Items
 class SupplyCreateForm(forms.ModelForm):
     '''Form for supplying stock from current stock'''
 
-
     class Meta:
         model  = Supplys
         fields = ['items', 'quantity']
@@ -35,7 +34,7 @@ class SupplyCreateForm(forms.ModelForm):
 
         # Quantity should be positive number
         if quantity_input < 1:
-            raise forms.ValidationError('Quantity must be a positive value')
+            raise forms.ValidationError('Quantity must be a positive number')
 
         item_input = self.cleaned_data.get('items')
 

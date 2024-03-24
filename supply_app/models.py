@@ -1,8 +1,8 @@
 # supply_app/models.py
 
 # django
-from django.db    import models
-from django.urls  import reverse
+from django.db   import models
+from django.urls import reverse
 
 # local
 from items.models import Items
