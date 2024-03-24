@@ -112,8 +112,14 @@
         <br>
 
         <!--------IMPORT/EXPORT BUTTONS----------->
-        <a class="btn btn-lg btn-success import_stock_btn" href="{% url 'import_create' %}#focus">Add</a>
-        <a class="btn btn-lg btn-danger  export_stock_btn" href="{% url 'supply_create' %}#focus">Supply</a>
+        <a class="btn btn-lg btn-success import_stock_btn" href="{% url 'import_create' %}#focus">
+          <img src="{% static 'admin/img/icon-addlink.svg' %}" alt="">
+          Add &nbsp;
+        </a>
+        <a class="btn btn-lg btn-danger export_stock_btn" href="{% url 'supply_create' %}#focus">
+          Supply
+          <img src="{% static 'admin/img/tooltag-add.svg' %}" alt="">
+        </a>
 
         <!-----------APPLICATION'S BODY------------>
         {% block body_lower %}
