@@ -1,7 +1,8 @@
 # supply_app/views.py
 
 # django
-from django.urls          import reverse, reverse_lazy
+from django.db            import transaction
+from django.urls          import reverse
 from django.http          import Http404, HttpResponseRedirect
 from django.utils         import timezone
 from django.contrib       import messages
@@ -47,6 +48,7 @@ class SupplyStockCreateView(CreateView):
         return super().form_invalid(form)
 
 
+    @transaction.atomic
     def form_valid(self, form):
         '''Handle both Supplys & Items model together'''
 
@@ -139,6 +141,7 @@ class SupplyStockUpdateView(UpdateView):
         return kwargs
 
 
+    @transaction.atomic
     def form_valid(self, form):
         '''
         Handle Items model as well with Supply model
@@ -194,6 +197,7 @@ class SupplyStockDeleteView(DeleteView):
         return self.object.get_absolute_url()
 
 
+    @transaction.atomic
     def form_valid(self, form):
         '''Handle the Items models as well with Supplys model'''
             
