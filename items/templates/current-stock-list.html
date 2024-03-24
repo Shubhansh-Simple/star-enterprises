@@ -23,7 +23,7 @@
       <table class="table table-striped">
 
         <!-- TABLE COLUMN HEADING -->
-        <tr class="bg-dark text-white">
+        <tr class="bg-dark text-white" style="border-bottom : 2px solid black">
           <th class="text-center text-secondary">S.NO</th>
           <th class="text-center text-secondary">Item Name</th>
           <th class="text-center text-secondary">Quantity</th>
@@ -36,7 +36,15 @@
             <th class="text-center">{{forloop.counter}}.)</th>
             <td class="text-center"><mark>{{item.name}}</mark></td>
             <td class="text-center">{{item.quantity}}</td>
-            <td class="text-center"><i>{{item.updated_at}}</i></td>
+            <td class="text-center">
+              <small><i>
+                {% if item.updated_at.date == today.date %}
+                  {{item.updated_at|time:"h:i A"}}
+                {% else %}
+                  {{item.updated_at|date:"F d, Y"}}
+                {% endif %}
+              </i></small>
+            </td>
           </tr>  
         {% endfor %}
 

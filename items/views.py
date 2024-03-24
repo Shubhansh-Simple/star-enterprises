@@ -2,6 +2,7 @@
 
 # django
 from django.http          import HttpResponseRedirect
+from django.utils         import timezone
 from django.contrib       import messages
 from django.db.models     import ProtectedError, Sum
 from django.views.generic import DeleteView, ListView, CreateView, UpdateView
@@ -30,11 +31,15 @@ class CurrentStockListView(ListView):
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        '''Add total quantity in current stock'''
+        '''Add total quantity and today's date'''
 
         context       = super().get_context_data(object_list=object_list, **kwargs)
         current_stock = self.get_queryset()
 
+        # today's date
+        context['today'] = timezone.now()
+
+        # Count of all boxes
         context['total_quantity'] = current_stock.aggregate(totalling=Sum('quantity'))['totalling']
 
         return context
