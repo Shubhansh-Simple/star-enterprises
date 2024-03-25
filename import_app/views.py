@@ -152,7 +152,6 @@ class ImportStockUpdateView(UpdateView):
 
         kwargs            = super().get_form_kwargs()
         kwargs['initial'] = {'items' : str(self.get_object().items) }
-        #print('IMPORT UPDATE KWARGS - ',kwargs)
         return kwargs
 
 
@@ -177,14 +176,21 @@ class ImportStockUpdateView(UpdateView):
 
                 difference = current_stock_quantity - updated_stock_quantity
 
+                #           [ITEMS MODEL]
+                # Updating total-quantity
+                import_item.items.quantity -= difference
+                import_item.items.save()
+
                 #           [IMPORTS MODEL]
                 # Updating import-quantity
                 import_item.quantity = updated_stock_quantity
                 import_item.save()
 
-                #           [ITEMS MODEL]
-                import_item.items.quantity -= difference
-                import_item.items.save()
+                #           [REPORTS MODEL]
+                # Updating arrival-stock
+                report_item               = Reports.objects.get(items=import_item.items, entry_date=import_item.entry_date)
+                report_item.arrival_stock = updated_stock_quantity
+                report_item.save()
 
             # Success message
             msg = generate_msg(updated_stock_quantity, import_item.items.name, 'updated')
