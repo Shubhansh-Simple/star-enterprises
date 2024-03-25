@@ -219,7 +219,14 @@ class ImportStockDeleteView(DeleteView):
         # Only active items can be deleted
         if import_item.items.is_active:
 
-            # ITEMS MODEL - Decrease total quantity
+            #            [ REPORTS MODEL ]
+            # Decrease arrival stock
+            report_item                = Reports.objects.get(entry_date=import_item.entry_date, items=import_item.items)
+            report_item.arrival_stock -= import_item.quantity 
+            report_item.save()
+
+            #            [ ITEMS MODEL ]
+            # Decrease total quantity
             import_item.items.quantity -= import_item.quantity
             import_item.items.save()
 

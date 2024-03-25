@@ -44,11 +44,14 @@ class Reports(models.Model):
     def save(self, *args, **kwargs):
         '''Handle total_stock & balance_stock on each saving'''
 
-        # total_stock   = old_stock   + arrival_stock
-        # balance_stock = total_stock - sold_stock      // tomorrow's old_stock
+        if self.id:
+            # Delete the report record if no change in quantity found
+            if self.arrival_stock == self.sold_stock == 0:
+                self.delete()
+                return
 
-        self.total_stock   = self.old_stock   + self.arrival_stock
-        self.balance_stock = self.total_stock - self.sold_stock
+        self.total_stock   = self.old_stock   + self.arrival_stock # after import stock
+        self.balance_stock = self.total_stock - self.sold_stock    # after supply stock
 
         super().save(*args, **kwargs)
 
